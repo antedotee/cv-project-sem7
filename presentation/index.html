@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kermany CXR · Literature Survey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+  <style>
+    :root {
+      --film: #0c0b09;
+      --emulsion: #161410;
+      --bone: #ebe4d6;
+      --muted: #9e9586;
+      --amber: #d4a04a;
+      --barium: #7eb8b0;
+      --rule: rgba(235, 228, 214, 0.12);
+      --danger: #c45c4a;
+    }
+
+    html, body {
+      background: var(--film);
+    }
+
+    .reveal {
+      font-family: "Outfit", sans-serif;
+      font-weight: 400;
+      font-size: 28px;
+      color: var(--bone);
+      background: var(--film);
+    }
+
+    .reveal .slides {
+      text-align: left;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 600;
+      color: var(--bone);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .reveal h1 { font-size: 2.35em; line-height: 1.05; }
+    .reveal h2 { font-size: 1.55em; line-height: 1.15; margin-bottom: 0.45em; }
+    .reveal h3 { font-size: 1.05em; color: var(--amber); font-weight: 600; }
+
+    .reveal p, .reveal li { color: var(--bone); line-height: 1.4; }
+    .reveal ul, .reveal ol { margin-left: 0.15em; }
+    .reveal li { margin: 0.22em 0; }
+    .reveal small, .reveal .muted { color: var(--muted); }
+    .reveal strong { color: var(--bone); font-weight: 600; }
+    .reveal a { color: var(--barium); }
+
+    .reveal .kicker {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.42em;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.7em;
+    }
+
+    .reveal .slides section {
+      padding: 0 8px;
+    }
+
+    .film-bg {
+      background:
+        radial-gradient(1200px 700px at 15% -10%, rgba(212, 160, 74, 0.07), transparent 55%),
+        radial-gradient(900px 500px at 110% 110%, rgba(126, 184, 176, 0.05), transparent 50%),
+        var(--film);
+    }
+
+    .grain:after {
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      opacity: 0.07;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 1.1em;
+    }
+
+    .stat {
+      border-top: 1px solid var(--amber);
+      padding-top: 0.45em;
+    }
+
+    .stat b {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 1.15em;
+      color: var(--amber);
+      display: block;
+    }
+
+    .stat span {
+      font-size: 0.42em;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .callout {
+      border-left: 3px solid var(--amber);
+      padding: 0.15em 0 0.15em 0.75em;
+      color: var(--bone);
+    }
+
+    .callout.barium { border-left-color: var(--barium); }
+    .callout.danger { border-left-color: var(--danger); }
+
+    table.compact {
+      width: 100%;
+      font-size: 0.42em;
+      border-collapse: collapse;
+      font-family: "Outfit", sans-serif;
+    }
+
+    table.compact th {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      text-align: left;
+      color: var(--amber);
+      border-bottom: 1px solid var(--amber);
+      padding: 0.45em 0.4em;
+      letter-spacing: 0.04em;
+    }
+
+    table.compact td {
+      border-bottom: 1px solid var(--rule);
+      padding: 0.42em 0.4em;
+      color: var(--bone);
+      vertical-align: top;
+    }
+
+    table.compact tr:last-child td { border-bottom: 0; }
+    table.compact .hard { color: var(--danger); }
+
+    .chip {
+      display: inline-block;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.38em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--rule);
+      padding: 0.25em 0.55em;
+      margin: 0 0.25em 0.25em 0;
+      color: var(--barium);
+    }
+
+    .paper-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 22px;
+      font-size: 0.48em;
+    }
+
+    .paper-grid article {
+      border-top: 1px solid var(--rule);
+      padding-top: 0.45em;
+    }
+
+    .paper-grid h4 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.35em;
+      margin: 0 0 0.15em;
+      color: var(--bone);
+    }
+
+    .paper-grid p { margin: 0.15em 0 0; color: var(--muted); }
+
+    .reveal .progress span { background: var(--amber); }
+    .reveal .controls { color: var(--amber); }
+    .reveal .slide-number { font-family: "IBM Plex Mono", monospace; font-size: 14px; color: var(--muted); }
+
+    .title-rule {
+      width: 72px;
+      height: 2px;
+      background: var(--amber);
+      margin: 1.1em 0 0.9em;
+    }
+
+    .footer-meta {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.38em;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 1.4em;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal film-bg grain">
+    <div class="slides">
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">Semester 7 · Computer Vision · Literature Survey</p>
+        <h1>Pneumonia on the<br>pediatric film</h1>
+        <div class="title-rule"></div>
+        <p>Ten papers on the <em>Kermany</em> chest X-ray set —<br>what they used, what they hid, and what is still hard.</p>
+        <p class="footer-meta">Guangzhou Women and Children’s Medical Center · 5,856 frontal CXRs · ages 1–5 · Cell PDF in-folder</p>
+        <aside class="notes">Open with the dataset, not the models. Kermany is our APTOS. The Cell PDF is now local — quote specificity 90.1% and frozen Inception V3, not Rahman’s table.</aside>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">01 · Why this problem</p>
+        <h2>Childhood pneumonia still kills.</h2>
+        <p>CXR is the cheap test. Reads are slow, variable, and scarce where the deaths are.</p>
+        <div class="stat-row">
+          <div class="stat"><b>~2M</b><span>under-5 deaths / yr</span></div>
+          <div class="stat"><b>1–5 yr</b><span>Kermany age band</span></div>
+          <div class="stat"><b>3 labels</b><span>normal · bacterial · viral</span></div>
+          <div class="stat"><b>1 site</b><span>Guangzhou, one hospital</span></div>
+        </div>
+        <aside class="notes">Kermany 2018 cites WHO: about 2 million children under 5 per year. Later papers use ~700k — an updated WHO figure. Quote the Cell number when you are talking about the source paper. The project is classification, not a deployed CAD system.</aside>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">02 · The dataset · analog of APTOS</p>
+        <h2>Kermany 2018 is the public set.</h2>
+        <div class="two-col">
+          <div>
+            <p>Released as the CXR generalization experiment in the Cell OCT paper. Became the Kaggle “Chest X-Ray Images (Pneumonia)” collection.</p>
+            <p class="muted" style="font-size:0.62em;margin-top:1em;">Kermany et al., Cell 172:1122–1131, 2018. Local file <em>kermany_research_paper.pdf</em> · DOI 10.1016/j.cell.2018.02.010 · data 10.17632/rscbjbr9sj.3</p>
+          </div>
+          <div>
+            <div class="stat-row" style="grid-template-columns:1fr 1fr;margin-top:0;">
+              <div class="stat"><b>5,856</b><span>patients / films</span></div>
+              <div class="stat"><b>5,232 / 624</b><span>Cell train / test</span></div>
+              <div class="stat"><b>5,216 / 16 / 624</b><span>Kaggle (16 peeled from train)</span></div>
+              <div class="stat"><b>2,538 / 1,345</b><span>bacterial / viral (train)</span></div>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">Cell protocol is 5,232 train and 624 patient-held-out test. Kaggle moved 16 training images into a toy val folder. The 16-image val set is not in the paper. Mention it now; we come back when 99% papers appear.</aside>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">03 · Source paper · from the PDF</p>
+        <h2>They froze Inception V3.</h2>
+        <div class="two-col" style="font-size:0.72em;">
+          <div>
+            <p>Same ImageNet Inception V3 they used for OCT. Convolutional layers locked as feature extractors. Bottlenecks cached. <strong>Only the softmax is trained.</strong></p>
+            <p>Adam, LR 0.001, 1,000 images/step, 10,000 steps (100 epochs). GTX 1080. Patient-independent holdout after every step.</p>
+          </div>
+          <div>
+            <p class="callout danger">Unfreezing the conv stack and fine-tuning <em>decreased</em> accuracy — they blame overfitting. STAR Methods, not later folklore.</p>
+            <p class="callout barium" style="margin-top:0.7em;">Clinical labels, not just names: bacterial = urgent referral (antibiotics); viral = supportive care; normal = observation.</p>
+          </div>
+        </div>
+        <aside class="notes">This is the fact later papers blur. Kermany did not fine-tune last blocks. The 2026 bake-off on this same set finds the opposite: fine-tune +5.5%. That disagreement is now a project ablation.</aside>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">04 · Source paper · Figure 6</p>
+        <h2>Two tasks. Specificity, not precision.</h2>
+        <table class="compact" style="font-size:0.5em;margin-top:0.4em;">
+          <thead>
+            <tr><th>Task</th><th>Acc</th><th>Sens</th><th>Spec</th><th>AUC</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Pneumonia vs normal</td><td>92.8%</td><td>93.2%</td><td>90.1%</td><td>96.8%</td></tr>
+            <tr><td>Bacterial vs viral</td><td>90.7%</td><td>88.6%</td><td>90.9%</td><td>94.0%</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.58em;margin-top:0.85em;">Figure S6: bacterial = <strong>focal lobar consolidation</strong>; viral = <strong>diffuse interstitial pattern</strong>; normal = clear lungs. Test set: 234 normal + 390 pneumonia (242 bacterial, 148 viral).</p>
+        <aside class="notes">Rahman Table 5 lists 90.1% as precision. The Cell text says specificity. Bacterial-versus-viral is already two points worse — the hard-class story starts on page one of this dataset. Occlusion maps in the paper are for OCT, not CXR.</aside>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">05 · How this survey was done</p>
+        <h2>Ten papers, four fields each.</h2>
+        <p>Same worksheet as the APTOS brief, remapped to pneumonia. Abstract-only papers and extra ImageNet ensembles were dropped.</p>
+        <p>
+          <span class="chip">Backbone</span>
+          <span class="chip">Imbalance</span>
+          <span class="chip">Preprocessing</span>
+          <span class="chip">Metric</span>
+        </p>
+        <ul>
+          <li>Firecrawl paper search + citation expansion from Kermany, Stephen, Rahman, Rajaraman.</li>
+          <li>In-body read on the local Cell PDF and on arXiv; PMC/MDPI scrape on open journals.</li>
+          <li>Dropped adult-only ChestX-ray14 / CheXpert papers unless they <em>transfer into</em> Kermany.</li>
+        </ul>
+        <aside class="notes">Every paper in this deck was read in full. Do not quote Rahman Table 5 for Kermany metrics — use the Cell PDF.</aside>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">06 · The common pattern</p>
+        <h2>APTOS had a recipe. So does Kermany.</h2>
+        <p class="callout">ImageNet CNN transferred onto Kermany. The source paper froze the backbone; later papers usually fine-tune. Accuracy + AUC + recall reported. Viral pneumonia — not the obvious consolidations — is the hard class.</p>
+        <table class="compact" style="margin-top:1.2em;font-size:0.5em;">
+          <thead>
+            <tr><th></th><th>APTOS (example brief)</th><th>Kermany (this survey)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Task</td><td>5-grade DR</td><td>2-class or 3-class pneumonia</td></tr>
+            <tr><td>Backbone</td><td>ResNet / EfficientNet</td><td>ResNet / DenseNet / VGG / Inception</td></tr>
+            <tr><td>Imbalance</td><td>Severe, Proliferative rare</td><td>Normal rare; viral rarer than bacterial</td></tr>
+            <tr><td>Headline metric</td><td>Quadratic weighted kappa</td><td>Accuracy, AUC, sensitivity, F1</td></tr>
+            <tr><td>Hard grades</td><td>Severe, Proliferative</td><td class="hard">Viral pneumonia</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">07 · Backbones</p>
+        <h2>What they actually trained.</h2>
+        <div class="two-col" style="font-size:0.72em;">
+          <div>
+            <h3>From scratch</h3>
+            <p>Stephen 2019 custom CNN — 93.7% val acc.<br>LightPneumoNet 2025 — 388k params, 94.2% acc, 0.99 recall.</p>
+            <h3 style="margin-top:0.8em;">Single tower, ImageNet</h3>
+            <p>Kermany Inception V3, <em>frozen</em>. Rajaraman VGG16. Rahman DenseNet201. Salehi DenseNet121. 2026 bake-off: ResNet50 fine-tune wins.</p>
+          </div>
+          <div>
+            <h3>Ensembles</h3>
+            <p>Ayan, best as three models. Kundu: GoogLeNet + ResNet-18 + DenseNet-121 — the one that also leaves Kermany.</p>
+            <h3 style="margin-top:0.8em;">Hybrids / XAI</h3>
+            <p>XCCNet dilated CNN + transformer. Grad-CAM / Score-CAM / LIME on the hybrids and the 2026 bake-off.</p>
+          </div>
+        </div>
+        <aside class="notes">If asked “which backbone should we use?” — ResNet50 or DenseNet121, and ablate frozen vs last-block fine-tune. Kermany froze and said unfreezing overfit; 2026 says the opposite. Ensemble only after that baseline is honest.</aside>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">08 · Class imbalance</p>
+        <h2>About 3 : 1 pneumonia : normal.</h2>
+        <p>Bacterial also outnumbers viral. Almost nobody uses focal loss on this set.</p>
+        <ul>
+          <li><strong>None in the source paper</strong> — Kermany: transfer learning only, no weights or CXR aug.</li>
+          <li><strong>Geometric aug</strong> — rotate, shift, shear, zoom, flip (Stephen, Rahman).</li>
+          <li><strong>Minority duplication</strong> — Ayan 1,349 → 2,534 normals.</li>
+          <li><strong>Balance-to-N</strong> — Rahman augments every class to 4,500.</li>
+          <li><strong>SMOTE</strong> — Salehi (the odd one out).</li>
+          <li><strong>Class weights</strong> — LightPneumoNet 2.0 / 1.2.</li>
+          <li><strong>GAN / ADA synthetics</strong> — XCCNet manufactures extra normals.</li>
+        </ul>
+        <aside class="notes">Recommend class weights + light aug for our project. GAN synthesis is extra scope.</aside>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">09 · Preprocessing</p>
+        <h2>From “resize and hope” to a CXR stack.</h2>
+        <div class="two-col">
+          <div>
+            <h3>Default 2018–21</h3>
+            <p>224×224 or 227×227. 1/255 or ImageNet mean/std. Duplicate the gray channel to RGB so the pretrained stem accepts it.</p>
+          </div>
+          <div>
+            <h3>What actually moved the needle</h3>
+            <p>Lung ROI at 1024² (Rajaraman). CLAHE, lung seg, rib suppression (XCCNet). Grayscale on (LightPneumoNet). Flip off, because left/right is anatomy.</p>
+          </div>
+        </div>
+        <p class="callout barium" style="margin-top:0.9em;">A semester-scale ablation: full film vs cropped lung, with and without CLAHE, is more original than a sixth ensemble.</p>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">10 · Metrics</p>
+        <h2>Not quadratic weighted kappa.</h2>
+        <p>Kermany is not an ordinal 5-grade scale. Papers report:</p>
+        <p>
+          <span class="chip">Accuracy</span>
+          <span class="chip">Sensitivity / recall</span>
+          <span class="chip">Specificity</span>
+          <span class="chip">Precision</span>
+          <span class="chip">F1</span>
+          <span class="chip">AUC</span>
+        </p>
+        <p class="callout danger">Binary accuracy is the vanity number. Three-class accuracy and <em>viral recall</em> are the honest ones. Screening papers chase recall and leak false positives.</p>
+        <aside class="notes">If a reviewer asks why we are not using QWK: because the labels are nominal (normal/bacterial/viral), not ordered severity. Macro-F1 plus per-class recall is the right analog.</aside>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">11 · Foundational three</p>
+        <h2>2018–19: the set, the crop, the scratch net.</h2>
+        <div class="paper-grid">
+          <article>
+            <h4>Kermany · Cell · 2018</h4>
+            <p>Frozen Inception V3. Pneumonia vs normal 92.8% acc, 93.2% sens, <strong>90.1% spec</strong>, 96.8% AUC. Bacterial vs viral 90.7%. Created the public set.</p>
+          </article>
+          <article>
+            <h4>Rajaraman · Appl. Sci. · 2018</h4>
+            <p>Custom VGG16 on lung ROI. 96.2% disease / 93.6% bacterial–viral. First serious CAM/LIME paper here.</p>
+          </article>
+          <article>
+            <h4>Stephen · JHE · 2019</h4>
+            <p>Scratch CNN + heavy Keras aug. 93.73% val acc. Custom 3722/2134 split — not the official test.</p>
+          </article>
+          <article>
+            <h4>Lesson</h4>
+            <p>These three are fully open and still define the dataset, the lung-crop idea, and the from-scratch baseline.</p>
+          </article>
+        </div>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">12 · 2020–21</p>
+        <h2>The useful mid-period papers.</h2>
+        <div class="paper-grid">
+          <article>
+            <h4>Rahman · 2020</h4>
+            <p>DenseNet201 on three task cuts: 98% binary, 93.3% three-class, 95% bacterial vs viral. The clean comparison table.</p>
+          </article>
+          <article>
+            <h4>Salehi · BJR · 2021</h4>
+            <p>DenseNet121 + SMOTE. 86.8% acc, AUC 0.86. Radiology journal. Warns about patient leakage.</p>
+          </article>
+          <article>
+            <h4>Ayan et al. · 2021</h4>
+            <p>Ensemble 95.83% binary, <strong>90.71% three-class</strong>. Viral recall <span style="color:#c45c4a;">77%</span> vs bacterial 98%.</p>
+          </article>
+          <article>
+            <h4>Kundu et al. · 2021</h4>
+            <p>GoogLeNet + ResNet-18 + DenseNet-121. 98.81% on Kermany, <strong>86.95% on RSNA</strong>. The generalization slide.</p>
+          </article>
+        </div>
+        <aside class="notes">Salehi next to Rahman is the 86 vs 98 contrast. Ayan is the viral-class slide. Kundu is the “it does not travel” slide. Extra five-model ensembles were cut.</aside>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">13 · 2024–26</p>
+        <h2>Hybrids, small nets, honest ablations.</h2>
+        <div class="paper-grid">
+          <article>
+            <h4>XCCNet · 2024</h4>
+            <p>Dilated CNN + contrastive transformer. CLAHE, lung seg, rib suppress, GAN normals. 99.76% on a balanced 80/10/10. Four datasets.</p>
+          </article>
+          <article>
+            <h4>LightPneumoNet · 2025</h4>
+            <p>388k-param scratch CNN, class weights, grayscale. 94.2% acc, 0.99 recall. The deployable counter-argument.</p>
+          </article>
+          <article>
+            <h4>TL vs scratch · 2026</h4>
+            <p>ResNet50 fine-tune 99.43% on a <em>reshuffled</em> 523-image test. Frozen backbones lag by ~5.5 points. Grad-CAM on every error type.</p>
+          </article>
+          <article>
+            <h4>Lesson</h4>
+            <p>99% is a split story. The useful experiment is freeze vs fine-tune on the Cell 624 test, with Grad-CAM on the errors.</p>
+          </article>
+        </div>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">14 · Scoreboard with a warning</p>
+        <h2>These numbers are not one league.</h2>
+        <table class="compact">
+          <thead>
+            <tr>
+              <th>Paper</th>
+              <th>Backbone</th>
+              <th>Imbalance</th>
+              <th>Headline</th>
+              <th>Split</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Kermany 2018</td><td>Inception V3 frozen</td><td>none</td><td>92.8% acc · 90.1% spec</td><td>Cell 624</td></tr>
+            <tr><td>Rajaraman 2018</td><td>VGG16 + lung crop</td><td>noisy train</td><td>96.2 / 93.6%</td><td>Official-style</td></tr>
+            <tr><td>Stephen 2019</td><td>Scratch CNN</td><td>heavy aug</td><td>93.7% val</td><td>Custom</td></tr>
+            <tr><td>Rahman 2020</td><td>DenseNet201</td><td>4,500 / class</td><td>98 / 93.3 / 95%</td><td>Augmented folds</td></tr>
+            <tr><td>Salehi 2021</td><td>DenseNet121</td><td>SMOTE</td><td>86.8%</td><td>Conservative</td></tr>
+            <tr><td>Ayan 2021</td><td>CNN ensemble</td><td>aug normals</td><td>95.8 / 90.7%</td><td>624 test</td></tr>
+            <tr><td>Kundu 2021</td><td>3-CNN ens.</td><td>TL</td><td>98.8% · 87% RSNA</td><td>Two datasets</td></tr>
+            <tr><td>XCCNet 2024</td><td>CNN + ViT</td><td>ADA GAN</td><td>99.76%</td><td>80/10/10</td></tr>
+            <tr><td>LightPneumo 2025</td><td>388k CNN</td><td>class weights</td><td>94.2% / 0.99 rec</td><td>Held-out test</td></tr>
+            <tr><td>Comparative 2026</td><td>ResNet50 FT</td><td>none</td><td>99.43%</td><td class="hard">Reshuffled</td></tr>
+          </tbody>
+        </table>
+        <aside class="notes">Do not let anyone rank XCCNet above Kermany. Different tests. Say that out loud.</aside>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">15 · Consensus</p>
+        <h2>What the ten papers agree on.</h2>
+        <ul>
+          <li>Transfer an ImageNet CNN. Whether to freeze it is <em>not</em> settled — Kermany froze; 2026 unfreezes and gains ~5 points.</li>
+          <li>DenseNet and ResNet are enough. EfficientNet is not automatically better here.</li>
+          <li>Augment or reweight the normal (and viral) class. Accuracy alone lies.</li>
+          <li>Viral vs bacterial is the remaining clinical task. Already 2 points worse in the Cell paper.</li>
+          <li>Kermany does not travel — expect a double-digit drop on RSNA or another hospital.</li>
+        </ul>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">16 · Open fights</p>
+        <h2>Where they do not agree.</h2>
+        <div class="two-col" style="font-size:0.78em;">
+          <div>
+            <p class="callout">Is 99% pneumonia, or Guangzhou film-processor texture?</p>
+            <p class="callout barium">Freeze the backbone (Kermany) vs fine-tune last blocks (2026, +5.5%).</p>
+          </div>
+          <div>
+            <p class="callout">One well-tuned ResNet vs a three-model ensemble (Ayan, Kundu).</p>
+            <p class="callout danger">Cell 624 test vs Kaggle’s 16-image val vs a homemade 80/10/10. This is the real leaderboard bug.</p>
+          </div>
+        </div>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">17 · For our project</p>
+        <h2>A baseline that would survive a viva.</h2>
+        <ol>
+          <li>State the split. Cell 624 <em>or</em> patient-level 80/10/10. Never both quietly.</li>
+          <li>Train ResNet50 (or DenseNet121). Ablate frozen vs last-block fine-tune.</li>
+          <li>Report both Cell tasks: pneumonia-vs-normal <em>and</em> bacterial-vs-viral. Lead with viral recall.</li>
+          <li>Scratch CNN as the control (Stephen / LightPneumoNet).</li>
+          <li>Grad-CAM on errors, aimed at Figure S6 signs — focal consolidation vs interstitial pattern.</li>
+        </ol>
+        <aside class="notes">This is the slide to leave up in Q&amp;A. If they ask for novelty: freeze vs fine-tune on the official 624, lung-crop ablation, or viral-class loss.</aside>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">References</p>
+        <h2>The ten.</h2>
+        <ol style="font-size:0.42em; line-height:1.45;">
+          <li>Kermany et al. Identifying medical diagnoses… *Cell* 2018. 10.1016/j.cell.2018.02.010 — local PDF; data 10.17632/rscbjbr9sj.3</li>
+          <li>Rajaraman et al. Visualization and interpretation… *Appl. Sci.* 2018. 10.3390/app8101715</li>
+          <li>Stephen et al. An efficient deep learning approach… *J. Healthc. Eng.* 2019. 10.1155/2019/4180949</li>
+          <li>Rahman et al. Transfer learning with deep CNN… arXiv:2004.06578</li>
+          <li>Salehi et al. Automated detection… *Br. J. Radiol.* 2021. 10.1259/bjr.20201263</li>
+          <li>Ayan et al. Diagnosis of pediatric pneumonia with ensemble… *Arab. J. Sci. Eng.* 2021. 10.1007/s13369-021-06127-z</li>
+          <li>Kundu et al. Pneumonia detection… ensemble… *PLoS One* 2021. 10.1371/journal.pone.0256630</li>
+          <li>XCCNet. Explainable contrastive dilated CNN + transformer. arXiv:2410.16143</li>
+          <li>Chauhan et al. LightPneumoNet. arXiv:2510.11232</li>
+          <li>Pediatric pneumonia… TL vs custom CNNs. arXiv:2601.00837</li>
+        </ol>
+        <p class="footer-meta">Full notes and access log: literature-survey.md</p>
+      </section>
+
+      <section data-background-color="#0c0b09">
+        <p class="kicker">Close</p>
+        <h1>The field already<br>cleared 90%.</h1>
+        <div class="title-rule"></div>
+        <p>The remaining work is the viral class, the split, and whether the model still works on someone else’s film.</p>
+        <p class="footer-meta">Arrow keys · S for speaker notes · Esc for overview</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: "c/t",
+      transition: "slide",
+      transitionSpeed: "fast",
+      backgroundTransition: "fade",
+      center: true,
+      width: 1180,
+      height: 700,
+      margin: 0.08,
+      plugins: [RevealNotes]
+    });
+  </script>
+</body>
+</html>
