@@ -17,9 +17,6 @@ data/
 baseline/cache/
 baseline/checkpoints/*
 !baseline/checkpoints/xccnet_best.pt
-*.pt
-!xccnet_best.pt
-!baseline/checkpoints/xccnet_best.pt
 *.pth
 
 # Local Kaggle credentials
