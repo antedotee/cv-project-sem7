@@ -488,7 +488,18 @@
         <div class="title-rule"></div>
         <p style="font-size:0.78em;">Kermany CXR · Guangzhou Women and Children’s Medical Center</p>
         <p style="font-size:0.62em;color:var(--muted);margin-top:1em;letter-spacing:0.02em;">Made by — Kartik Yadav, Gangadhar Yadav, Sahil Sarawgi</p>
-        <p class="footer-meta">Literature survey · 10 papers · 2018–2026</p>
+        <p class="footer-meta">Literature survey · baseline · hypothesis · 2018–2026</p>
+      </section>
+
+      <!-- Introduction -->
+      <section>
+        <p class="kicker">Introduction</p>
+        <h2>What these slides cover.</h2>
+        <ol class="paper-list">
+          <li><b>01</b> The data. One chest X-ray is normal or pneumonia. Pneumonia splits into bacterial and viral. The films are from Guangzhou. The children are 1 to 5 years old.</li>
+          <li><b>02</b> Ten papers, 2018 to 2026. Each paper uses its own split. These slides do not rank the papers on one accuracy number.</li>
+          <li><b>03</b> Our baseline. We reproduce XCCNet on the full Kermany set. The last slide states one hypothesis and one prediction. We state both before the next code change.</li>
+        </ol>
       </section>
 
       <!-- 2. Dataset / labels -->
@@ -1009,6 +1020,35 @@
             <tr><td>10</td><td>2026 TL</td><td>1 bin</td><td>none</td><td>99.43</td><td class="hard">reshuffle</td></tr>
           </tbody>
         </table>
+      </section>
+
+      <!-- Hypothesis -->
+      <section>
+        <p class="kicker">Milestone 3 · stated before the next code change</p>
+        <h2>Hypothesis</h2>
+        <p style="font-size:0.72em;margin:0 0 0.45em;">
+          We train XCCNet on all 5,856 Kermany films. The split is stratified 80/10/10.
+          The run uses CLAHE and a lung mask. CLIP stays frozen.
+          This run does not include the GAN. This run does not include rib suppression.
+        </p>
+        <table class="compact">
+          <thead><tr><th>Result</th><th>Acc</th><th>Prec</th><th>Recall</th><th>F1</th></tr></thead>
+          <tbody>
+            <tr><td>Our test, 585 films</td><td>94.87%</td><td>94.81%</td><td>98.36%</td><td>96.55%</td></tr>
+            <tr><td>Paper, traditional aug</td><td>97.18%</td><td>94.52%</td><td>98.65%</td><td>96.54%</td></tr>
+            <tr><td>Paper, full stack</td><td>99.76%</td><td>99.75%</td><td>99.75%</td><td>99.75%</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72em;margin:0.45em 0 0;">
+          The model misses 7 pneumonia films and marks 23 normal films as pneumonia.
+          The 99.76% test adds 2,624 synthetic normal films, so the two classes are almost equal.
+        </p>
+        <p style="font-size:0.72em;margin:0.35em 0 0;">
+          <b>Hypothesis.</b> The gap comes from the GAN and from rib suppression.
+          <b>Prediction.</b> Add one of those two stages on this same split.
+          Accuracy on the 585-film test rises above 94.87%.
+          The same model on the official 624-patient test scores below 94.87%.
+        </p>
       </section>
 
     </div>
