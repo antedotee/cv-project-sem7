@@ -1,0 +1,176 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{url}
+\usepackage{placeins}
+\usepackage{flushend}
+\hyphenation{Rahman DenseNet ImageNet LightPneumoNet}
+
+\begin{document}
+
+\title{A Literature Survey of Deep Learning Methods for Pediatric Pneumonia Classification from Chest X-rays}
+
+\author{\IEEEauthorblockN{Kartik Yadav, Gangadhar Yadav, and Sahil Sarawgi}}
+
+\maketitle
+
+\begin{abstract}
+Chest X-rays are used to read pediatric pneumonia. Each film carries one of three labels: normal, bacterial pneumonia, or viral pneumonia. Antibiotics treat bacterial disease. Supportive care treats viral disease. In 2018, Kermany \textit{et al.} released 5{,}856 pediatric chest X-rays from Guangzhou Women and Children's Medical Center. Later deep learning work uses this collection as the shared benchmark. This paper reviews ten studies from 2018 to 2026. The methods include transfer learning, custom convolutional networks, ensembles, and one CNN--transformer hybrid. On this collection, binary accuracy is often above 90\%. Accuracy drops when the task has three classes. Viral pneumonia is the weakest class. Studies that keep the official test of 624 patients report 86\% to 95\% accuracy. Studies that use a custom 80/10/10 split report about 99\%. One ensemble reaches 98.81\% on Kermany and 86.95\% on RSNA. The review groups papers by method, compares reported metrics, and lists open issues.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Pediatric pneumonia, chest X-ray, Kermany dataset, convolutional neural network, transfer learning, class imbalance.
+\end{IEEEkeywords}
+
+\section{Introduction}
+Pneumonia remains a major cause of death in children younger than five years. The usual imaging test is a chest X-ray. Bacterial disease often shows as a dense opaque patch limited to one lobe~\cite{kermany2018}. Viral disease often shows as a spread haze across both lungs. A healthy film shows lungs without those opacities. A single pneumonia-versus-normal score does not tell a clinician whether the child needs antibiotics or supportive care.
+
+Kermany \textit{et al.} released a public set of these films~\cite{kermany2018}. The \textit{Cell} article is mainly an OCT study. The chest X-ray part became the shared exam for later CNN work. The collection has about 5{,}856 frontal films of children aged 1 to 5 years. The source hospital is Guangzhou Women and Children's Medical Center. Later papers change the backbone. They still train on these images.
+
+This paper reviews ten studies from 2018 to 2026. Every study trains on the Kermany chest X-rays. Papers that only repeat a binary ImageNet score are left out. The aim is not to pick a winner by a single accuracy value. The aim is to track how the task, the split, and the method changed, and which problems remain open.
+
+Section~\ref{sec:data} describes the collection. Section~\ref{sec:survey} reviews the papers by method. Section~\ref{sec:compare} compares reported results. Section~\ref{sec:gaps} lists open issues. Section~\ref{sec:conc} concludes.
+
+\section{Dataset}
+\label{sec:data}
+The Kermany collection holds frontal chest X-rays taken during routine care~\cite{kermany2018}. Two expert physicians assigned labels. A third physician reviewed the evaluation films. Unreadable films were discarded during quality checks. Pneumonia cases outnumber normal cases by about 3:1. Bacterial cases outnumber viral cases.
+
+Table~\ref{tab:split} lists the official split from the \textit{Cell} article. No test patient appears in training. Kaggle later moves 16 train images into a validation folder. That folder is not part of the \textit{Cell} protocol. A paper that keeps the official test of 624 patients and a paper that uses an 80/10/10 split of train images do not share one exam.
+
+\begin{table}[htbp]
+\centering
+\caption{Official Kermany split~\cite{kermany2018}.}
+\label{tab:split}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Split} & \textbf{Normal} & \textbf{Bacterial} & \textbf{Viral} & \textbf{Total} \\
+\midrule
+Train & 1{,}349 & 2{,}538 & 1{,}345 & 5{,}232 images \\
+Test  & 234 & 242 & 148 & 624 patients \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Literature Survey}
+\label{sec:survey}
+The ten papers are grouped by method. The groups match the layout in recent pediatric pneumonia reviews~\cite{raghaw2024,rahman2020}: transfer learning, custom convolutional networks, ensembles, and hybrid models.
+
+\subsection{Transfer Learning}
+Kermany \textit{et al.}~\cite{kermany2018} started from Inception V3 with ImageNet weights. Convolutional weights stayed fixed. Only the softmax layer was trained. They reported two binary tasks on the official test of 624 patients. Pneumonia versus normal: accuracy 92.8\%, sensitivity 93.2\%, specificity 90.1\%, AUC 96.8\%. Bacterial versus viral: accuracy 90.7\%, sensitivity 88.6\%, specificity 90.9\%, AUC 94.0\%. Training the convolutional stack as well lowered accuracy. They do not report a joint three-class score. The 90.1\% value is specificity. Some later comparison tables call it precision.
+
+Rajaraman \textit{et al.}~\cite{rajaraman2018} adapted VGG16. They cut the original classifier and attached a GAP layer plus a fully connected layer. An atlas-based boundary finder restricted each film to the lung region. Both the full film and the crop were resampled to $1024\times 1024$ and mean-normalized. Noisy train images were retained. On the crop, pneumonia versus normal accuracy was 96.2\% and AUC was 0.993. Bacterial versus viral accuracy was 93.6\%. Three-class accuracy was 91.8\%. The crop beat the full film. CAM and LIME maps aligned with lung tissue. The atlas finder misses part of the costophrenic recesses.
+
+Rahman \textit{et al.}~\cite{rahman2020} ran AlexNet, ResNet18, DenseNet201, and SqueezeNet on three tasks. DenseNet201 won all three. Geometric transforms raised each train class to 4{,}500 images. Their held-out set had about 200 images per class. That set is not the official test of 624 patients. DenseNet201 accuracy was 98.0\% for pneumonia versus normal, 95.0\% for bacterial versus viral, and 93.3\% for three-class. Confusion matrices show bacterial and viral labels swapping.
+
+Salehi \textit{et al.}~\cite{salehi2021} ran VGG19, DenseNet121, Xception, and ResNet50 in a radiology journal. They applied SMOTE. DenseNet121 accuracy was 86.8\% and AUC was 0.86. Sensitivity stayed above 91\%. The authors note that films from one child can appear in both train and test. They state that the reported scores may be inflated.
+
+Choudhury~\cite{choudhury2026} trained a four-block CNN from random weights. The baselines were ResNet50, DenseNet121, and EfficientNet-B0. Each pretrained net was either frozen or updated on the last two blocks. ResNet50 with last-block updates reached 99.43\% accuracy, 99.61\% F1, and 99.93\% AUC, with three errors in 523 images. Last-block updates beat frozen weights by 5.48\% average accuracy. Combining models added no gain. The split is a stratified 80/10/10 of 5{,}216 train images. That split is not the official test of 624 patients.
+
+\subsection{Custom Convolutional Networks}
+Stephen \textit{et al.}~\cite{stephen2019} trained a four-block CNN from random weights. They used heavy Keras transforms instead of class weights. The best input size was $200\times 200\times 3$. Training accuracy was 95.31\%. Validation accuracy was 93.73\%. The task is binary only. The split is 3{,}722 train and 2{,}134 validation. That split is not the official test of 624 patients. AUC is not reported.
+
+Chauhan \textit{et al.}~\cite{chauhan2025} proposed LightPneumoNet. The network has 388{,}082 parameters and occupies 1.48\,MB. Filter counts run from 16 to 128. Input is $224\times 224$ grayscale. Class weights are 2.0 for normal and 1.2 for pneumonia. Horizontal reflection is off. On a held-out test, accuracy was 94.2\%, precision 0.92, recall 0.99, and F1 0.96. The task is binary. High recall comes with lower precision.
+
+\subsection{Ensemble Methods}
+Ayan \textit{et al.}~\cite{ayan2021} tested VGG, ResNet, Inception, Xception, MobileNet, SqueezeNet, and a custom PNet. A mix of three nets beat a mix of five or seven. They raised the 1{,}349 normal images to 2{,}534 by rotation, zoom, and flip. The test set of 624 images matches the official protocol. Binary mix accuracy was 95.83\%. Three-class mix accuracy was 90.71\%. Bacterial recall was 97.93\%. Viral recall was 77.03\%. Viral pneumonia remains the weak class.
+
+Kundu \textit{et al.}~\cite{kundu2021} combined GoogLeNet, ResNet-18, and DenseNet-121 by a weighted vote on class probabilities. On Kermany, accuracy was 98.81\%, precision 98.82\%, recall 98.80\%, F1 98.79\%, and AUC 98.35\%. On RSNA, accuracy was 86.95\% and recall was 87.02\%. Accuracy drops about 12 points on films from another source. The task is binary. Errors occur when contrast is poor and when disease is still faint.
+
+\subsection{Hybrid CNN--Transformer}
+Raghaw \textit{et al.}~\cite{raghaw2024} proposed XCCNet. A dilated CNN is joined to a contrastive transformer. Preprocessing applies CLAHE, lung masks from ResUNet++, and rib suppression. A GAN added 2{,}624 synthetic normal images. Grad-CAM, Score-CAM, and LIME produce maps. Full-stack accuracy was 99.76\%. Ablation: no extra samples 96.29\%, standard transforms 97.18\%. The split is 80/10/10. That split is not the official test of 624 patients. The 99.76\% figure is not comparable to Kermany 92.8\%.
+
+\section{Comparative Analysis}
+\label{sec:compare}
+Table~\ref{tab:matrix} uses the column layout of Rahman \textit{et al.}~\cite{rahman2020}. Scores from different tasks, splits, and hospitals must not be read as a ranking.
+
+\begin{table*}[htbp]
+\centering
+\caption{Comparison of the ten surveyed studies. Accuracy values are as reported by each paper and are not comparable across rows when the test protocol differs.}
+\label{tab:matrix}
+\begin{tabular}{cllllcl}
+\toprule
+\textbf{Ref.} & \textbf{Author} & \textbf{Method} & \textbf{Task} & \textbf{Imbalance} & \textbf{Accuracy (\%)} & \textbf{Test protocol} \\
+\midrule
+\cite{kermany2018} & Kermany \textit{et al.} & Frozen Inception V3 & 2 binary & none & 92.8 / 90.7 & 624 patients \\
+\cite{rajaraman2018} & Rajaraman \textit{et al.} & Custom VGG16, lung crop & 2 binary + 3-class & noisy train kept & 96.2 / 93.6 / 91.8 & 624 patients \\
+\cite{stephen2019} & Stephen \textit{et al.} & Scratch CNN & 1 binary & heavy aug. & 93.7 (val.) & custom 3722/2134 \\
+\cite{rahman2020} & Rahman \textit{et al.} & DenseNet201 & 2 binary + 3-class & 4{,}500/class & 98.0 / 95.0 / 93.3 & $\sim$200/class \\
+\cite{salehi2021} & Salehi \textit{et al.} & DenseNet121, SMOTE & 1 binary & SMOTE & 86.8 & held-out \\
+\cite{ayan2021} & Ayan \textit{et al.} & Ensemble of 3 CNNs & binary + 3-class & aug. normal & 95.8 / 90.7 & $\sim$624 \\
+\cite{kundu2021} & Kundu \textit{et al.} & Weighted ensemble & 1 binary & transfer learning & 98.8 $\rightarrow$ 87 & Kermany, then RSNA \\
+\cite{raghaw2024} & Raghaw \textit{et al.} & CNN--transformer, GAN & 1 binary & GAN normals & 99.76 & 80/10/10 \\
+\cite{chauhan2025} & Chauhan \textit{et al.} & 388k CNN & 1 binary & class weights & 94.2 & independent test \\
+\cite{choudhury2026} & Choudhury & ResNet50 fine-tune & 1 binary & none & 99.43 & 80/10/10 of train \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Table~\ref{tab:matrix} supports the points below. Transfer learning CNNs are the usual starting point. DenseNet121 or DenseNet201 wins in Rahman~\cite{rahman2020} and Salehi~\cite{salehi2021}. ResNet50 with last-block updates wins in Choudhury~\cite{choudhury2026}. A CNN trained from random weights still works for the binary task~\cite{stephen2019,chauhan2025}.
+
+Binary accuracy on Kermany is usually high. Three-class accuracy sits 4 to 8 points lower. Viral recall is the weak number. Kermany already shows bacterial-versus-viral accuracy of 90.7\% against pneumonia-versus-normal accuracy of 92.8\%~\cite{kermany2018}. Ayan reports viral recall of 77.03\% against bacterial recall of 97.93\%~\cite{ayan2021}.
+
+Most papers treat class imbalance with extra samples. Stephen uses geometric transforms~\cite{stephen2019}. Ayan raises the count of normal images~\cite{ayan2021}. Rahman balances each class to 4{,}500~\cite{rahman2020}. Salehi uses SMOTE~\cite{salehi2021}. Chauhan uses class weights~\cite{chauhan2025}. Raghaw uses GAN synthetic normals~\cite{raghaw2024}. These ten papers do not use focal loss. Horizontal reflection is not always valid. LightPneumoNet does not use horizontal reflection because left and right laterality carry meaning~\cite{chauhan2025}.
+
+Papers that keep the 624-patient test report 86\% to 95\%~\cite{kermany2018,rajaraman2018,salehi2021,ayan2021}. Papers that use an 80/10/10 split report about 99\%~\cite{raghaw2024,choudhury2026}. Kundu drops from 98.81\% to 86.95\% when the source hospital changes~\cite{kundu2021}.
+
+\FloatBarrier
+
+\section{Open Research Issues}
+\label{sec:gaps}
+The reviewed papers leave the following issues open.
+
+\begin{enumerate}
+\item \textbf{Test protocol.} The official protocol is 5{,}232 train images and a 624-patient test~\cite{kermany2018}. Custom 80/10/10 splits produce higher accuracy on a different exam.
+\item \textbf{Three-class labels.} Antibiotic choice depends on bacterial versus viral pneumonia. Recent 99\% papers return to binary labels~\cite{raghaw2024,chauhan2025,choudhury2026}.
+\item \textbf{Freeze versus fine-tune.} Kermany reports lower accuracy after they trained the Inception V3 stack~\cite{kermany2018}. Choudhury reports a 5.48\% gain from last-block updates~\cite{choudhury2026}. The two protocols were not run on the same 624-patient test.
+\item \textbf{Ensemble versus one network.} Ayan and Kundu use three networks~\cite{ayan2021,kundu2021}. Choudhury finds that combining models adds no gain after ResNet50 last-block updates~\cite{choudhury2026}.
+\item \textbf{Lung crop versus full image.} Rajaraman and XCCNet restrict the input to lung~\cite{rajaraman2018,raghaw2024}. Most other papers keep the full film.
+\item \textbf{Cross-hospital generalization.} Kundu is the only paper in this set that tests off-site~\cite{kundu2021}. Salehi and Choudhury name single-center data as a limit and stay inside one hospital~\cite{salehi2021,choudhury2026}.
+\end{enumerate}
+
+\section{Conclusion}
+\label{sec:conc}
+This review covered ten deep learning studies of pediatric pneumonia on the Kermany chest X-ray collection. Transfer learning is the usual method. Custom CNNs still work for binary labels. Ensembles make the viral class and the off-site drop visible. Hybrid models and small networks report high accuracy on custom splits. Binary nineties on Guangzhou films are common. Three-class labels, the official 624-patient test, and films from another hospital remain open.
+
+\begin{thebibliography}{00}
+
+\bibitem{kermany2018}
+D.~S. Kermany, M.~Goldbaum, W.~Cai \textit{et al.}, ``Identifying medical diagnoses and treatable diseases by image-based deep learning,'' \textit{Cell}, vol.~172, no.~5, pp.~1122--1131.e2, 2018.
+
+\bibitem{rajaraman2018}
+S.~Rajaraman, S.~Candemir, I.~Kim, G.~Thoma, and S.~Antani, ``Visualization and interpretation of convolutional neural network predictions in detecting pneumonia in pediatric chest radiographs,'' \textit{Appl.\ Sci.}, vol.~8, no.~10, p.~1715, 2018.
+
+\bibitem{stephen2019}
+O.~Stephen, M.~Sain, U.~J. Maduh, and D.-U. Jeong, ``An efficient deep learning approach to pneumonia classification in healthcare,'' \textit{J.\ Healthc.\ Eng.}, vol.~2019, p.~4180949, 2019.
+
+\bibitem{rahman2020}
+T.~Rahman, M.~E.~H. Chowdhury \textit{et al.}, ``Transfer learning with deep convolutional neural network (CNN) for pneumonia detection using chest X-ray,'' arXiv:2004.06578, 2020.
+
+\bibitem{salehi2021}
+M.~Salehi, R.~Mohammadi, H.~Ghaffari, N.~Sadighi, and R.~Reiazi, ``Automated detection of pneumonia cases using deep transfer learning with paediatric chest X-ray images,'' \textit{Br.\ J.\ Radiol.}, vol.~94, p.~20201263, 2021.
+
+\bibitem{ayan2021}
+E.~Ayan, B.~Karabulut, and H.~M. \"Unver, ``Diagnosis of pediatric pneumonia with ensemble of deep convolutional neural networks in chest X-ray images,'' \textit{Arab.\ J.\ Sci.\ Eng.}, vol.~47, pp.~2123--2139, 2021.
+
+\bibitem{kundu2021}
+R.~Kundu, R.~Das, Z.~W. Geem, G.-T. Han, and R.~Sarkar, ``Pneumonia detection in chest X-ray images using an ensemble of deep learning models,'' \textit{PLoS One}, vol.~16, no.~9, p.~e0256630, 2021.
+
+\bibitem{raghaw2024}
+C.~S. Raghaw, P.~S. Bhore, M.~Z.~U. Rehman, and N.~Kumar, ``An explainable contrastive-based dilated convolutional network with transformer for pediatric pneumonia detection,'' arXiv:2410.16143, 2024.
+
+\bibitem{chauhan2025}
+N.~Chauhan, P.~K. Gupta, and F.~Doja, ``LightPneumoNet: Lightweight pneumonia classifier,'' arXiv:2510.11232, 2025.
+
+\bibitem{choudhury2026}
+A.~R. Choudhury, ``Pediatric pneumonia detection from chest X-rays: A comparative study of transfer learning and custom CNNs,'' arXiv:2601.00837, 2026.
+
+\end{thebibliography}
+
+\end{document}

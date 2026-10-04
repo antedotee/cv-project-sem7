@@ -1,0 +1,6 @@
+open_clip_torch
+torchxrayvision
+opencv-python-headless
+kagglehub
+matplotlib
+Pillow

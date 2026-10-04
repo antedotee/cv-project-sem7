@@ -1,0 +1,26 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# LaTeX build products
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+
+# Dataset and preprocessing cache. The submitted checkpoint is tracked.
+data/
+baseline/cache/
+baseline/checkpoints/*
+!baseline/checkpoints/xccnet_best.pt
+*.pt
+!xccnet_best.pt
+!baseline/checkpoints/xccnet_best.pt
+*.pth
+
+# Local Kaggle credentials
+kaggle.json

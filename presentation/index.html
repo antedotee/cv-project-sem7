@@ -3,572 +3,1037 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kermany CXR · Literature Survey</title>
+  <title>CV Project · Pediatric Pneumonia CXR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,400;0,500;0,600&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,700&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
   <style>
     :root {
-      --film: #0c0b09;
-      --emulsion: #161410;
-      --bone: #ebe4d6;
-      --muted: #9e9586;
-      --amber: #d4a04a;
-      --barium: #7eb8b0;
-      --rule: rgba(235, 228, 214, 0.12);
-      --danger: #c45c4a;
+      --paper: #efe6d4;
+      --ink: #231c16;
+      --muted: #6a5e50;
+      --stamp: #c4452d;
+      --moss: #3d5c4a;
+      --lead: #4a6741;
+      --bact: #c47a2c;
+      --viral: #2f6d68;
+      --norm: #8a7d6b;
+      --p: #b5441a;
+      --rule: rgba(35, 28, 22, 0.16);
+      --film: #efe6d4;
+      --bone: #231c16;
+      --amber: #c4452d;
+      --barium: #2f6d68;
+      --danger: #c4452d;
     }
-
-    html, body {
-      background: var(--film);
-    }
-
+    html, body { background: #e4d8c2; }
     .reveal {
-      font-family: "Outfit", sans-serif;
+      font-family: "Schibsted Grotesk", sans-serif;
       font-weight: 400;
-      font-size: 28px;
-      color: var(--bone);
-      background: var(--film);
-    }
-
-    .reveal .slides {
-      text-align: left;
-    }
-
-    .reveal h1, .reveal h2, .reveal h3 {
-      font-family: "Cormorant Garamond", serif;
-      font-weight: 600;
-      color: var(--bone);
-      text-transform: none;
-      letter-spacing: 0;
-    }
-
-    .reveal h1 { font-size: 2.35em; line-height: 1.05; }
-    .reveal h2 { font-size: 1.55em; line-height: 1.15; margin-bottom: 0.45em; }
-    .reveal h3 { font-size: 1.05em; color: var(--amber); font-weight: 600; }
-
-    .reveal p, .reveal li { color: var(--bone); line-height: 1.4; }
-    .reveal ul, .reveal ol { margin-left: 0.15em; }
-    .reveal li { margin: 0.22em 0; }
-    .reveal small, .reveal .muted { color: var(--muted); }
-    .reveal strong { color: var(--bone); font-weight: 600; }
-    .reveal a { color: var(--barium); }
-
-    .reveal .kicker {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.42em;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 0.7em;
-    }
-
-    .reveal .slides section {
-      padding: 0 8px;
-    }
-
-    .film-bg {
+      font-size: 36px;
+      color: var(--ink);
       background:
-        radial-gradient(1200px 700px at 15% -10%, rgba(212, 160, 74, 0.07), transparent 55%),
-        radial-gradient(900px 500px at 110% 110%, rgba(126, 184, 176, 0.05), transparent 50%),
-        var(--film);
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 27px,
+          rgba(35, 28, 22, 0.035) 27px,
+          rgba(35, 28, 22, 0.035) 28px
+        ),
+        radial-gradient(900px 500px at 100% -10%, rgba(196, 69, 45, 0.08), transparent 50%),
+        var(--paper);
     }
-
-    .grain:after {
+    .reveal::before {
       content: "";
       pointer-events: none;
       position: absolute;
       inset: 0;
-      opacity: 0.07;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.09;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
+    .reveal .slides { text-align: left; }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: "Fraunces", serif;
+      font-weight: 600;
+      font-optical-sizing: auto;
+      color: var(--ink);
+      text-transform: none;
+      letter-spacing: -0.02em;
+    }
+    .reveal h1 { font-size: 1.85em; line-height: 0.98; font-weight: 700; }
+    .reveal h1 em { font-style: italic; font-weight: 500; color: var(--stamp); }
+    .reveal h2 { font-size: 1.28em; line-height: 1.08; margin: 0 0 0.28em; }
+    .reveal h3 { font-size: 0.85em; color: var(--stamp); font-weight: 600; margin: 0.35em 0 0.2em; }
+    .reveal p, .reveal li { color: var(--ink); line-height: 1.35; }
+    .reveal ul { margin: 0.2em 0 0 0.2em; }
+    .reveal li { margin: 0.18em 0; font-size: 0.88em; }
+    .reveal small, .reveal .muted { color: var(--muted); }
+    .reveal strong { color: var(--ink); font-weight: 600; }
+    .reveal .slides section {
+      padding: 0 10px 0 28px;
+    }
+    .reveal .slides section::before {
+      content: "GWCMC  ·  PEDIATRIC CXR  ·  AGES 1–5";
+      position: absolute;
+      left: -6px;
+      top: 8%;
+      height: 84%;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: "Azeret Mono", monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      color: var(--stamp);
+      opacity: 0.55;
+    }
+    .kicker {
+      font-family: "Azeret Mono", monospace;
+      font-size: 0.38em;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stamp);
+      margin-bottom: 0.4em;
+      font-weight: 600;
+    }
+    .title-rule {
+      width: 48px; height: 8px; background: var(--stamp);
+      margin: 0.75em 0 0.7em;
+      transform: skewX(-18deg);
+    }
+    .footer-meta {
+      font-family: "Azeret Mono", monospace;
+      font-size: 0.38em; color: var(--muted);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-top: 0.95em;
+      font-weight: 500;
+    }
+    .chip {
+      display: inline-block;
+      font-family: "Azeret Mono", monospace;
+      font-size: 0.36em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: 1.5px solid var(--ink);
+      padding: 0.22em 0.5em;
+      margin: 0 0.15em 0.15em 0;
+      color: var(--ink);
+      background: rgba(255,255,255,0.35);
+      font-weight: 500;
+    }
+    .chip.hard {
+      color: #fff;
+      background: var(--stamp);
+      border-color: var(--stamp);
+    }
+    .meta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin: 0.32em 0 0.35em;
+      font-size: 0.48em;
+      line-height: 1.32;
+    }
+    .meta-row b {
+      display: block;
+      font-family: "Azeret Mono", monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stamp);
+      margin-bottom: 0.18em;
+      font-weight: 600;
+    }
+    .meta-row span { color: var(--muted); }
+    table.compact {
+      width: 100%;
+      font-size: 0.46em;
+      border-collapse: collapse;
+      margin-top: 0.12em;
+      border-top: 3px solid var(--ink);
+    }
+    table.compact th {
+      font-family: "Azeret Mono", monospace;
+      font-weight: 600;
+      text-align: left;
+      color: var(--ink);
+      border-bottom: 1.5px solid var(--ink);
+      padding: 0.36em 0.35em;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.85em;
+    }
+    table.compact td {
+      border-bottom: 1px dashed var(--rule);
+      padding: 0.32em 0.35em;
+      color: var(--ink);
+    }
+    table.compact tr:last-child td { border-bottom: 0; }
+    table.compact .hard { color: var(--stamp); font-weight: 600; }
 
+    .htree {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 0.35em 0 0.4em;
+      font-family: "Azeret Mono", monospace;
+      font-size: 0.42em;
+      letter-spacing: 0.02em;
+      font-weight: 500;
+    }
+    .htree-root {
+      display: flex;
+      align-items: center;
+      padding: 0 0.7em;
+      border: 2px solid var(--ink);
+      color: var(--ink);
+      white-space: nowrap;
+      min-width: 7.2em;
+      justify-content: center;
+      background: #fff8ea;
+    }
+    .htree-stem {
+      width: 18px;
+      position: relative;
+    }
+    .htree-stem:before {
+      content: "";
+      position: absolute;
+      left: 0; right: 8px; top: 50%;
+      border-top: 2px solid var(--ink);
+    }
+    .htree-stem:after {
+      content: "";
+      position: absolute;
+      right: 8px; top: 22%; bottom: 22%;
+      border-left: 2px solid var(--ink);
+    }
+    .htree-arms {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+      flex: 1;
+    }
+    .htree-arm {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .htree-arm:before {
+      content: "";
+      width: 14px;
+      border-top: 2px solid var(--ink);
+      flex-shrink: 0;
+    }
+    .split-tag {
+      border: 2px solid var(--ink);
+      padding: 0.28em 0.5em;
+      color: var(--ink);
+      white-space: nowrap;
+      min-width: 7.4em;
+      background: #fff8ea;
+    }
+    .split-tag.test {
+      background: var(--moss);
+      color: #f4efe4;
+      border-color: var(--moss);
+    }
+    .leaves {
+      display: flex;
+      flex: 1;
+      margin-left: 8px;
+      overflow: hidden;
+      height: 2.05em;
+      border: 2px solid var(--ink);
+    }
+    .leaf {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff8ea;
+      font-size: 0.92em;
+      padding: 0 0.3em;
+      min-width: 0;
+    }
+    .leaf.n { background: var(--norm); color: #fff8ea; }
+    .leaf.b { background: var(--bact); color: #fff8ea; }
+    .leaf.v { background: var(--viral); color: #fff8ea; }
+    .leaf.p { background: var(--p); color: #fff8ea; }
+    .legend {
+      display: flex;
+      gap: 1.1em;
+      font-family: "Azeret Mono", monospace;
+      font-size: 0.36em;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0 0 0.15em;
+      font-weight: 500;
+    }
+    .legend i {
+      display: inline-block;
+      width: 0.7em; height: 0.7em;
+      margin-right: 0.35em;
+      vertical-align: -0.05em;
+      border: 1px solid var(--ink);
+    }
     .stat-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 14px;
-      margin-top: 1.1em;
+      margin-top: 0.9em;
     }
-
     .stat {
-      border-top: 1px solid var(--amber);
-      padding-top: 0.45em;
+      border-top: 3px solid var(--ink);
+      padding-top: 0.4em;
     }
-
     .stat b {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 1.15em;
-      color: var(--amber);
+      font-family: "Fraunces", serif;
+      font-size: 1.25em;
+      font-weight: 700;
+      color: var(--stamp);
       display: block;
+      letter-spacing: -0.03em;
     }
-
     .stat span {
-      font-size: 0.42em;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-    }
-
-    .callout {
-      border-left: 3px solid var(--amber);
-      padding: 0.15em 0 0.15em 0.75em;
-      color: var(--bone);
-    }
-
-    .callout.barium { border-left-color: var(--barium); }
-    .callout.danger { border-left-color: var(--danger); }
-
-    table.compact {
-      width: 100%;
-      font-size: 0.42em;
-      border-collapse: collapse;
-      font-family: "Outfit", sans-serif;
-    }
-
-    table.compact th {
-      font-family: "IBM Plex Mono", monospace;
+      font-family: "Azeret Mono", monospace;
+      font-size: 0.4em; color: var(--muted);
+      letter-spacing: 0.08em; text-transform: uppercase;
       font-weight: 500;
-      text-align: left;
-      color: var(--amber);
-      border-bottom: 1px solid var(--amber);
-      padding: 0.45em 0.4em;
+    }
+    .callout {
+      border-left: 4px solid var(--stamp);
+      padding: 0.1em 0 0.1em 0.7em;
+      font-size: 0.8em;
+    }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+    .classtree {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 0.25em 0 0.85em;
+    }
+    .ct-root {
+      font-family: "Azeret Mono", monospace;
+      font-size: 0.46em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 2px solid var(--ink);
+      color: var(--ink);
+      padding: 0.7em 0.85em;
+      white-space: nowrap;
+      background: #fff8ea;
+      font-weight: 600;
+    }
+    .ct-join {
+      width: 28px;
+      height: 120px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .ct-join:before {
+      content: "";
+      position: absolute;
+      left: 0; width: 14px; top: 50%;
+      border-top: 2px solid var(--ink);
+    }
+    .ct-join:after {
+      content: "";
+      position: absolute;
+      left: 14px; top: 18%; bottom: 18%;
+      border-left: 2px solid var(--ink);
+    }
+    .ct-arms {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .ct-arm {
+      display: flex;
+      align-items: center;
+    }
+    .ct-arm:before {
+      content: "";
+      width: 16px;
+      border-top: 2px solid var(--ink);
+      flex-shrink: 0;
+    }
+    .ct-node {
+      font-family: "Azeret Mono", monospace;
+      font-size: 0.46em;
       letter-spacing: 0.04em;
+      padding: 0.55em 0.75em;
+      white-space: nowrap;
+      border: 2px solid var(--ink);
+      background: #fff8ea;
+      font-weight: 600;
     }
-
-    table.compact td {
-      border-bottom: 1px solid var(--rule);
-      padding: 0.42em 0.4em;
-      color: var(--bone);
-      vertical-align: top;
+    .ct-node.n { background: var(--norm); color: #fff8ea; border-color: var(--ink); }
+    .ct-node.p { background: var(--p); color: #fff8ea; border-color: var(--ink); }
+    .ct-node.b { background: var(--bact); color: #fff8ea; border-color: var(--ink); }
+    .ct-node.v { background: var(--viral); color: #fff8ea; border-color: var(--ink); }
+    .ct-subjoin {
+      width: 22px;
+      height: 70px;
+      position: relative;
+      flex-shrink: 0;
     }
-
-    table.compact tr:last-child td { border-bottom: 0; }
-    table.compact .hard { color: var(--danger); }
-
-    .chip {
-      display: inline-block;
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.38em;
-      letter-spacing: 0.08em;
+    .ct-subjoin:before {
+      content: "";
+      position: absolute;
+      left: 0; width: 10px; top: 50%;
+      border-top: 2px solid var(--ink);
+    }
+    .ct-subjoin:after {
+      content: "";
+      position: absolute;
+      left: 10px; top: 12%; bottom: 12%;
+      border-left: 2px solid var(--ink);
+    }
+    .ct-subarms {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .ct-subarm {
+      display: flex;
+      align-items: center;
+    }
+    .ct-subarm:before {
+      content: "";
+      width: 14px;
+      border-top: 2px solid var(--ink);
+      flex-shrink: 0;
+    }
+    .paper-list {
+      list-style: none;
+      margin: 0.4em 0 0;
+      padding: 0;
+      columns: 2;
+      column-gap: 2em;
+    }
+    .paper-list li {
+      font-size: 0.58em;
+      margin: 0;
+      padding: 0.32em 0;
+      border-bottom: 1px dashed var(--rule);
+      break-inside: avoid;
+      line-height: 1.3;
+      font-family: "Schibsted Grotesk", sans-serif;
+    }
+    .paper-list b {
+      font-family: "Azeret Mono", monospace;
+      font-size: 0.85em;
+      color: var(--stamp);
+      margin-right: 0.45em;
+      font-weight: 600;
+    }
+    .reveal .progress { height: 6px; }
+    .reveal .progress span { background: var(--stamp); }
+    .reveal .controls { color: var(--stamp); }
+    .reveal .slide-number {
+      font-family: "Azeret Mono", monospace;
+      font-size: 14px;
+      color: var(--stamp);
+      background: transparent;
+      border: 2px solid var(--stamp);
+      padding: 2px 8px;
+      font-weight: 600;
+    }
+    .reveal .slide-background {
+      background: transparent !important;
+    }
+    .case-stamp {
+      position: absolute;
+      right: 8px;
+      top: 4px;
+      border: 2.5px solid var(--stamp);
+      color: var(--stamp);
+      font-family: "Azeret Mono", monospace;
+      font-size: 0.34em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      border: 1px solid var(--rule);
-      padding: 0.25em 0.55em;
-      margin: 0 0.25em 0.25em 0;
-      color: var(--barium);
+      padding: 0.45em 0.7em;
+      transform: rotate(7deg);
+      font-weight: 600;
+      line-height: 1.35;
+      opacity: 0.82;
     }
-
-    .paper-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px 22px;
-      font-size: 0.48em;
+    .case-stamp small {
+      display: block;
+      letter-spacing: 0.22em;
+      font-size: 0.78em;
+      color: var(--stamp);
+      margin-top: 0.1em;
     }
-
-    .paper-grid article {
-      border-top: 1px solid var(--rule);
-      padding-top: 0.45em;
-    }
-
-    .paper-grid h4 {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 1.35em;
-      margin: 0 0 0.15em;
-      color: var(--bone);
-    }
-
-    .paper-grid p { margin: 0.15em 0 0; color: var(--muted); }
-
-    .reveal .progress span { background: var(--amber); }
-    .reveal .controls { color: var(--amber); }
-    .reveal .slide-number { font-family: "IBM Plex Mono", monospace; font-size: 14px; color: var(--muted); }
-
-    .title-rule {
-      width: 72px;
-      height: 2px;
-      background: var(--amber);
-      margin: 1.1em 0 0.9em;
-    }
-
-    .footer-meta {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.38em;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-top: 1.4em;
+    @media print {
+      .reveal, html, body { background: var(--paper) !important; }
+      .reveal .slides section { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
   </style>
 </head>
 <body>
-  <div class="reveal film-bg grain">
+  <div class="reveal">
     <div class="slides">
 
-      <section data-background-color="#0c0b09">
-        <p class="kicker">Semester 7 · Computer Vision · Literature Survey</p>
-        <h1>Pneumonia on the<br>pediatric film</h1>
+      <!-- 1. Title -->
+      <section>
+        <div class="case-stamp">Case file<small>CXR · 5,856</small></div>
+        <p class="kicker">Semester 7 · Computer Vision Project</p>
+        <h1><em>Pediatric</em> Pneumonia<br>Classification from<br>Chest X-rays</h1>
         <div class="title-rule"></div>
-        <p>Ten papers on the <em>Kermany</em> chest X-ray set —<br>what they used, what they hid, and what is still hard.</p>
-        <p class="footer-meta">Guangzhou Women and Children’s Medical Center · 5,856 frontal CXRs · ages 1–5 · Cell PDF in-folder</p>
-        <aside class="notes">Open with the dataset, not the models. Kermany is our APTOS. The Cell PDF is now local — quote specificity 90.1% and frozen Inception V3, not Rahman’s table.</aside>
+        <p style="font-size:0.78em;">Kermany CXR · Guangzhou Women and Children’s Medical Center</p>
+        <p style="font-size:0.62em;color:var(--muted);margin-top:1em;letter-spacing:0.02em;">Made by — Kartik Yadav, Gangadhar Yadav, Sahil Sarawgi</p>
+        <p class="footer-meta">Literature survey · 10 papers · 2018–2026</p>
       </section>
 
-      <section data-background-color="#0c0b09">
-        <p class="kicker">01 · Why this problem</p>
-        <h2>Childhood pneumonia still kills.</h2>
-        <p>CXR is the cheap test. Reads are slow, variable, and scarce where the deaths are.</p>
-        <div class="stat-row">
-          <div class="stat"><b>~2M</b><span>under-5 deaths / yr</span></div>
-          <div class="stat"><b>1–5 yr</b><span>Kermany age band</span></div>
-          <div class="stat"><b>3 labels</b><span>normal · bacterial · viral</span></div>
-          <div class="stat"><b>1 site</b><span>Guangzhou, one hospital</span></div>
-        </div>
-        <aside class="notes">Kermany 2018 cites WHO: about 2 million children under 5 per year. Later papers use ~700k — an updated WHO figure. Quote the Cell number when you are talking about the source paper. The project is classification, not a deployed CAD system.</aside>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">02 · The dataset · analog of APTOS</p>
-        <h2>Kermany 2018 is the public set.</h2>
-        <div class="two-col">
-          <div>
-            <p>Released as the CXR generalization experiment in the Cell OCT paper. Became the Kaggle “Chest X-Ray Images (Pneumonia)” collection.</p>
-            <p class="muted" style="font-size:0.62em;margin-top:1em;">Kermany et al., Cell 172:1122–1131, 2018. Local file <em>kermany_research_paper.pdf</em> · DOI 10.1016/j.cell.2018.02.010 · data 10.17632/rscbjbr9sj.3</p>
-          </div>
-          <div>
-            <div class="stat-row" style="grid-template-columns:1fr 1fr;margin-top:0;">
-              <div class="stat"><b>5,856</b><span>patients / films</span></div>
-              <div class="stat"><b>5,232 / 624</b><span>Cell train / test</span></div>
-              <div class="stat"><b>5,216 / 16 / 624</b><span>Kaggle (16 peeled from train)</span></div>
-              <div class="stat"><b>2,538 / 1,345</b><span>bacterial / viral (train)</span></div>
+      <!-- 2. Dataset / labels -->
+      <section>
+        <p class="kicker">The dataset</p>
+        <h2>Three labels on one film.</h2>
+        <div class="classtree">
+          <div class="ct-root">Chest X-ray</div>
+          <div class="ct-join"></div>
+          <div class="ct-arms">
+            <div class="ct-arm">
+              <div class="ct-node n">Normal</div>
+            </div>
+            <div class="ct-arm">
+              <div class="ct-node p">Pneumonia</div>
+              <div class="ct-subjoin"></div>
+              <div class="ct-subarms">
+                <div class="ct-subarm"><div class="ct-node b">Bacterial</div></div>
+                <div class="ct-subarm"><div class="ct-node v">Viral</div></div>
+              </div>
             </div>
           </div>
         </div>
-        <aside class="notes">Cell protocol is 5,232 train and 624 patient-held-out test. Kaggle moved 16 training images into a toy val folder. The 16-image val set is not in the paper. Mention it now; we come back when 99% papers appear.</aside>
+        <div class="stat-row" style="margin-top:0.35em;">
+          <div class="stat"><b>5,232</b><span>train images</span></div>
+          <div class="stat"><b>624</b><span>test patients</span></div>
+          <div class="stat"><b>1–5 yr</b><span>pediatric CXRs</span></div>
+          <div class="stat"><b>Guangzhou</b><span>Women &amp; Children’s Medical Center</span></div>
+        </div>
       </section>
 
-      <section data-background-color="#0c0b09">
-        <p class="kicker">03 · Source paper · from the PDF</p>
-        <h2>They froze Inception V3.</h2>
-        <div class="two-col" style="font-size:0.72em;">
-          <div>
-            <p>Same ImageNet Inception V3 they used for OCT. Convolutional layers locked as feature extractors. Bottlenecks cached. <strong>Only the softmax is trained.</strong></p>
-            <p>Adam, LR 0.001, 1,000 images/step, 10,000 steps (100 epochs). GTX 1080. Patient-independent holdout after every step.</p>
-          </div>
-          <div>
-            <p class="callout danger">Unfreezing the conv stack and fine-tuning <em>decreased</em> accuracy — they blame overfitting. STAR Methods, not later folklore.</p>
-            <p class="callout barium" style="margin-top:0.7em;">Clinical labels, not just names: bacterial = urgent referral (antibiotics); viral = supportive care; normal = observation.</p>
+      <!-- 3. Literature findings index -->
+      <section>
+        <h2>Literature findings</h2>
+        <ol class="paper-list">
+          <li><b>01</b> Kermany et al., 2018 · <em>Cell</em></li>
+          <li><b>02</b> Rajaraman et al., 2018 · <em>Appl. Sci.</em></li>
+          <li><b>03</b> Stephen et al., 2019 · <em>J. Healthc. Eng.</em></li>
+          <li><b>04</b> Rahman et al., 2020 · arXiv / <em>Appl. Sci.</em></li>
+          <li><b>05</b> Salehi et al., 2021 · <em>Br. J. Radiol.</em></li>
+          <li><b>06</b> Ayan, Karabulut &amp; Ünver, 2021 · <em>Arab. J. Sci. Eng.</em></li>
+          <li><b>07</b> Kundu et al., 2021 · <em>PLoS One</em></li>
+          <li><b>08</b> XCCNet, 2024 · arXiv</li>
+          <li><b>09</b> Chauhan, Gupta &amp; Doja, 2025 · LightPneumoNet</li>
+          <li><b>10</b> Transfer learning vs custom CNNs, 2026 · arXiv</li>
+        </ol>
+      </section>
+
+      <!-- Paper 1 -->
+      <section>
+        <p class="kicker">01 / 10 · Cell 2018</p>
+        <h2>Kermany et al.</h2>
+        <p>
+          <span class="chip">Inception V3 frozen</span>
+          <span class="chip">2 binaries</span>
+          <span class="chip">official 624</span>
+        </p>
+        <p class="legend"><i style="background:var(--norm)"></i>N <i style="background:var(--bact)"></i>B <i style="background:var(--viral)"></i>V</p>
+        <div class="htree">
+          <div class="htree-root">5,856</div>
+          <div class="htree-stem"></div>
+          <div class="htree-arms">
+            <div class="htree-arm">
+              <div class="split-tag">Train 5,232</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:1349">1,349</div>
+                <div class="leaf b" style="flex:2538">2,538</div>
+                <div class="leaf v" style="flex:1345">1,345</div>
+              </div>
+            </div>
+            <div class="htree-arm">
+              <div class="split-tag test">Test 624</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:234">234</div>
+                <div class="leaf b" style="flex:242">242</div>
+                <div class="leaf v" style="flex:148">148</div>
+              </div>
+            </div>
           </div>
         </div>
-        <aside class="notes">This is the fact later papers blur. Kermany did not fine-tune last blocks. The 2026 bake-off on this same set finds the opposite: fine-tune +5.5%. That disagreement is now a project ablation.</aside>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">04 · Source paper · Figure 6</p>
-        <h2>Two tasks. Specificity, not precision.</h2>
-        <table class="compact" style="font-size:0.5em;margin-top:0.4em;">
-          <thead>
-            <tr><th>Task</th><th>Acc</th><th>Sens</th><th>Spec</th><th>AUC</th></tr>
-          </thead>
+        <div class="meta-row">
+          <div><b>Model / task</b><span>Inception V3, ImageNet, conv frozen, softmax only. Pneumonia vs normal + bacterial vs viral. No 3-class.</span></div>
+          <div><b>Preprocess</b><span>Quality screening. Remove unreadable images.</span></div>
+          <div><b>Imbalance</b><span>None. Live with 3:1 and 2:1.</span></div>
+        </div>
+        <table class="compact">
+          <thead><tr><th>Task</th><th>Acc</th><th>Sens</th><th>Spec</th><th>AUC</th></tr></thead>
           <tbody>
-            <tr><td>Pneumonia vs normal</td><td>92.8%</td><td>93.2%</td><td>90.1%</td><td>96.8%</td></tr>
-            <tr><td>Bacterial vs viral</td><td>90.7%</td><td>88.6%</td><td>90.9%</td><td>94.0%</td></tr>
+            <tr><td>P vs N</td><td>92.8%</td><td>93.2%</td><td>90.1%</td><td>96.8%</td></tr>
+            <tr><td class="hard">B vs V</td><td>90.7%</td><td>88.6%</td><td>90.9%</td><td>94.0%</td></tr>
           </tbody>
         </table>
-        <p style="font-size:0.58em;margin-top:0.85em;">Figure S6: bacterial = <strong>focal lobar consolidation</strong>; viral = <strong>diffuse interstitial pattern</strong>; normal = clear lungs. Test set: 234 normal + 390 pneumonia (242 bacterial, 148 viral).</p>
-        <aside class="notes">Rahman Table 5 lists 90.1% as precision. The Cell text says specificity. Bacterial-versus-viral is already two points worse — the hard-class story starts on page one of this dataset. Occlusion maps in the paper are for OCT, not CXR.</aside>
       </section>
 
-      <section data-background-color="#0c0b09">
-        <p class="kicker">05 · How this survey was done</p>
-        <h2>Ten papers, four fields each.</h2>
-        <p>Same worksheet as the APTOS brief, remapped to pneumonia. Abstract-only papers and extra ImageNet ensembles were dropped.</p>
+      <!-- Paper 2 -->
+      <section>
+        <p class="kicker">02 / 10 · Appl. Sci. 2018</p>
+        <h2>Rajaraman et al.</h2>
         <p>
-          <span class="chip">Backbone</span>
-          <span class="chip">Imbalance</span>
-          <span class="chip">Preprocessing</span>
-          <span class="chip">Metric</span>
+          <span class="chip">custom VGG16</span>
+          <span class="chip">cut last layer · GAP + dense</span>
+          <span class="chip">2 binaries + 3-class</span>
+          <span class="chip">same 624</span>
         </p>
-        <ul>
-          <li>Firecrawl paper search + citation expansion from Kermany, Stephen, Rahman, Rajaraman.</li>
-          <li>In-body read on the local Cell PDF and on arXiv; PMC/MDPI scrape on open journals.</li>
-          <li>Dropped adult-only ChestX-ray14 / CheXpert papers unless they <em>transfer into</em> Kermany.</li>
-        </ul>
-        <aside class="notes">Every paper in this deck was read in full. Do not quote Rahman Table 5 for Kermany metrics — use the Cell PDF.</aside>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">06 · The common pattern</p>
-        <h2>APTOS had a recipe. So does Kermany.</h2>
-        <p class="callout">ImageNet CNN transferred onto Kermany. The source paper froze the backbone; later papers usually fine-tune. Accuracy + AUC + recall reported. Viral pneumonia — not the obvious consolidations — is the hard class.</p>
-        <table class="compact" style="margin-top:1.2em;font-size:0.5em;">
-          <thead>
-            <tr><th></th><th>APTOS (example brief)</th><th>Kermany (this survey)</th></tr>
-          </thead>
+        <p class="legend"><i style="background:var(--norm)"></i>N <i style="background:var(--bact)"></i>B <i style="background:var(--viral)"></i>V</p>
+        <div class="htree">
+          <div class="htree-root">Kermany</div>
+          <div class="htree-stem"></div>
+          <div class="htree-arms">
+            <div class="htree-arm">
+              <div class="split-tag">Train 5,232</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:1349">1,349</div>
+                <div class="leaf b" style="flex:2538">2,538</div>
+                <div class="leaf v" style="flex:1345">1,345</div>
+              </div>
+            </div>
+            <div class="htree-arm">
+              <div class="split-tag test">Test 624</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:234">234</div>
+                <div class="leaf b" style="flex:242">242</div>
+                <div class="leaf v" style="flex:148">148</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div><b>Model / task</b><span>Best: customized VGG16 (ImageNet). Cut the last layer, add GAP + dense. Also scratch sequential / residual / Inception. Both binaries + 3-class. CAM / LIME.</span></div>
+          <div><b>Preprocess</b><span>Atlas lung crop. Full film + ROI → 1024², mean-norm. No geo aug.</span></div>
+          <div><b>Imbalance</b><span>None. Keep noisy train images.</span></div>
+        </div>
+        <table class="compact">
+          <thead><tr><th>Task (VGG16, crop)</th><th>Acc</th><th>AUC</th><th>Recall</th><th>F1 / Spec</th></tr></thead>
           <tbody>
-            <tr><td>Task</td><td>5-grade DR</td><td>2-class or 3-class pneumonia</td></tr>
-            <tr><td>Backbone</td><td>ResNet / EfficientNet</td><td>ResNet / DenseNet / VGG / Inception</td></tr>
-            <tr><td>Imbalance</td><td>Severe, Proliferative rare</td><td>Normal rare; viral rarer than bacterial</td></tr>
-            <tr><td>Headline metric</td><td>Quadratic weighted kappa</td><td>Accuracy, AUC, sensitivity, F1</td></tr>
-            <tr><td>Hard grades</td><td>Severe, Proliferative</td><td class="hard">Viral pneumonia</td></tr>
+            <tr><td>P vs N</td><td>96.2%</td><td>0.993</td><td>96.2%</td><td>F1 0.970</td></tr>
+            <tr><td>B vs V</td><td>93.6%</td><td>0.962</td><td>98.4%</td><td>Spec 86.0%</td></tr>
+            <tr><td class="hard">3-class</td><td>91.8%</td><td>0.939</td><td>90.0%</td><td>F1 0.910</td></tr>
           </tbody>
         </table>
       </section>
 
-      <section data-background-color="#0c0b09">
-        <p class="kicker">07 · Backbones</p>
-        <h2>What they actually trained.</h2>
-        <div class="two-col" style="font-size:0.72em;">
-          <div>
-            <h3>From scratch</h3>
-            <p>Stephen 2019 custom CNN — 93.7% val acc.<br>LightPneumoNet 2025 — 388k params, 94.2% acc, 0.99 recall.</p>
-            <h3 style="margin-top:0.8em;">Single tower, ImageNet</h3>
-            <p>Kermany Inception V3, <em>frozen</em>. Rajaraman VGG16. Rahman DenseNet201. Salehi DenseNet121. 2026 bake-off: ResNet50 fine-tune wins.</p>
-          </div>
-          <div>
-            <h3>Ensembles</h3>
-            <p>Ayan, best as three models. Kundu: GoogLeNet + ResNet-18 + DenseNet-121 — the one that also leaves Kermany.</p>
-            <h3 style="margin-top:0.8em;">Hybrids / XAI</h3>
-            <p>XCCNet dilated CNN + transformer. Grad-CAM / Score-CAM / LIME on the hybrids and the 2026 bake-off.</p>
-          </div>
-        </div>
-        <aside class="notes">If asked “which backbone should we use?” — ResNet50 or DenseNet121, and ablate frozen vs last-block fine-tune. Kermany froze and said unfreezing overfit; 2026 says the opposite. Ensemble only after that baseline is honest.</aside>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">08 · Class imbalance</p>
-        <h2>About 3 : 1 pneumonia : normal.</h2>
-        <p>Bacterial also outnumbers viral. Almost nobody uses focal loss on this set.</p>
-        <ul>
-          <li><strong>None in the source paper</strong> — Kermany: transfer learning only, no weights or CXR aug.</li>
-          <li><strong>Geometric aug</strong> — rotate, shift, shear, zoom, flip (Stephen, Rahman).</li>
-          <li><strong>Minority duplication</strong> — Ayan 1,349 → 2,534 normals.</li>
-          <li><strong>Balance-to-N</strong> — Rahman augments every class to 4,500.</li>
-          <li><strong>SMOTE</strong> — Salehi (the odd one out).</li>
-          <li><strong>Class weights</strong> — LightPneumoNet 2.0 / 1.2.</li>
-          <li><strong>GAN / ADA synthetics</strong> — XCCNet manufactures extra normals.</li>
-        </ul>
-        <aside class="notes">Recommend class weights + light aug for our project. GAN synthesis is extra scope.</aside>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">09 · Preprocessing</p>
-        <h2>From “resize and hope” to a CXR stack.</h2>
-        <div class="two-col">
-          <div>
-            <h3>Default 2018–21</h3>
-            <p>224×224 or 227×227. 1/255 or ImageNet mean/std. Duplicate the gray channel to RGB so the pretrained stem accepts it.</p>
-          </div>
-          <div>
-            <h3>What actually moved the needle</h3>
-            <p>Lung ROI at 1024² (Rajaraman). CLAHE, lung seg, rib suppression (XCCNet). Grayscale on (LightPneumoNet). Flip off, because left/right is anatomy.</p>
-          </div>
-        </div>
-        <p class="callout barium" style="margin-top:0.9em;">A semester-scale ablation: full film vs cropped lung, with and without CLAHE, is more original than a sixth ensemble.</p>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">10 · Metrics</p>
-        <h2>Not quadratic weighted kappa.</h2>
-        <p>Kermany is not an ordinal 5-grade scale. Papers report:</p>
+      <!-- Paper 3 -->
+      <section>
+        <p class="kicker">03 / 10 · J. Healthc. Eng. 2019</p>
+        <h2>Stephen et al.</h2>
         <p>
-          <span class="chip">Accuracy</span>
-          <span class="chip">Sensitivity / recall</span>
-          <span class="chip">Specificity</span>
-          <span class="chip">Precision</span>
-          <span class="chip">F1</span>
-          <span class="chip">AUC</span>
+          <span class="chip">scratch CNN</span>
+          <span class="chip hard">1 binary only</span>
+          <span class="chip hard">reshuffled split</span>
         </p>
-        <p class="callout danger">Binary accuracy is the vanity number. Three-class accuracy and <em>viral recall</em> are the honest ones. Screening papers chase recall and leak false positives.</p>
-        <aside class="notes">If a reviewer asks why we are not using QWK: because the labels are nominal (normal/bacterial/viral), not ordered severity. Macro-F1 plus per-class recall is the right analog.</aside>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">11 · Foundational three</p>
-        <h2>2018–19: the set, the crop, the scratch net.</h2>
-        <div class="paper-grid">
-          <article>
-            <h4>Kermany · Cell · 2018</h4>
-            <p>Frozen Inception V3. Pneumonia vs normal 92.8% acc, 93.2% sens, <strong>90.1% spec</strong>, 96.8% AUC. Bacterial vs viral 90.7%. Created the public set.</p>
-          </article>
-          <article>
-            <h4>Rajaraman · Appl. Sci. · 2018</h4>
-            <p>Custom VGG16 on lung ROI. 96.2% disease / 93.6% bacterial–viral. First serious CAM/LIME paper here.</p>
-          </article>
-          <article>
-            <h4>Stephen · JHE · 2019</h4>
-            <p>Scratch CNN + heavy Keras aug. 93.73% val acc. Custom 3722/2134 split — not the official test.</p>
-          </article>
-          <article>
-            <h4>Lesson</h4>
-            <p>These three are fully open and still define the dataset, the lung-crop idea, and the from-scratch baseline.</p>
-          </article>
+        <p class="legend"><i style="background:var(--norm)"></i>N <i style="background:var(--p)"></i>Pneumonia (B+V merged)</p>
+        <div class="htree">
+          <div class="htree-root">5,856</div>
+          <div class="htree-stem"></div>
+          <div class="htree-arms">
+            <div class="htree-arm">
+              <div class="split-tag">Train 3,722</div>
+              <div class="leaves">
+                <div class="leaf p" style="flex:3722">mixed P + N</div>
+              </div>
+            </div>
+            <div class="htree-arm">
+              <div class="split-tag test">Val 2,134</div>
+              <div class="leaves">
+                <div class="leaf p" style="flex:2134">no official 624</div>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">12 · 2020–21</p>
-        <h2>The useful mid-period papers.</h2>
-        <div class="paper-grid">
-          <article>
-            <h4>Rahman · 2020</h4>
-            <p>DenseNet201 on three task cuts: 98% binary, 93.3% three-class, 95% bacterial vs viral. The clean comparison table.</p>
-          </article>
-          <article>
-            <h4>Salehi · BJR · 2021</h4>
-            <p>DenseNet121 + SMOTE. 86.8% acc, AUC 0.86. Radiology journal. Warns about patient leakage.</p>
-          </article>
-          <article>
-            <h4>Ayan et al. · 2021</h4>
-            <p>Ensemble 95.83% binary, <strong>90.71% three-class</strong>. Viral recall <span style="color:#c45c4a;">77%</span> vs bacterial 98%.</p>
-          </article>
-          <article>
-            <h4>Kundu et al. · 2021</h4>
-            <p>GoogLeNet + ResNet-18 + DenseNet-121. 98.81% on Kermany, <strong>86.95% on RSNA</strong>. The generalization slide.</p>
-          </article>
+        <div class="meta-row">
+          <div><b>Model / task</b><span>4-block CNN from scratch. Sigmoid. Pneumonia vs normal only. Best input 200×200×3.</span></div>
+          <div><b>Preprocess</b><span>Resize, 1/255. Rot 40°, shift/shear/zoom 0.2, h-flip. No lung crop.</span></div>
+          <div><b>Imbalance</b><span>Heavy Keras aug. No class weights.</span></div>
         </div>
-        <aside class="notes">Salehi next to Rahman is the 86 vs 98 contrast. Ayan is the viral-class slide. Kundu is the “it does not travel” slide. Extra five-model ensembles were cut.</aside>
+        <table class="compact">
+          <thead><tr><th>Split</th><th>Acc</th><th>Loss</th><th>AUC / Sens</th></tr></thead>
+          <tbody>
+            <tr><td>Train</td><td>95.31%</td><td>0.129</td><td>—</td></tr>
+            <tr><td>Validation</td><td>93.73%</td><td>0.184</td><td>not reported</td></tr>
+          </tbody>
+        </table>
       </section>
 
-      <section data-background-color="#0c0b09">
-        <p class="kicker">13 · 2024–26</p>
-        <h2>Hybrids, small nets, honest ablations.</h2>
-        <div class="paper-grid">
-          <article>
-            <h4>XCCNet · 2024</h4>
-            <p>Dilated CNN + contrastive transformer. CLAHE, lung seg, rib suppress, GAN normals. 99.76% on a balanced 80/10/10. Four datasets.</p>
-          </article>
-          <article>
-            <h4>LightPneumoNet · 2025</h4>
-            <p>388k-param scratch CNN, class weights, grayscale. 94.2% acc, 0.99 recall. The deployable counter-argument.</p>
-          </article>
-          <article>
-            <h4>TL vs scratch · 2026</h4>
-            <p>ResNet50 fine-tune 99.43% on a <em>reshuffled</em> 523-image test. Frozen backbones lag by ~5.5 points. Grad-CAM on every error type.</p>
-          </article>
-          <article>
-            <h4>Lesson</h4>
-            <p>99% is a split story. The useful experiment is freeze vs fine-tune on the Cell 624 test, with Grad-CAM on the errors.</p>
-          </article>
+      <!-- Paper 4 -->
+      <section>
+        <p class="kicker">04 / 10 · Appl. Sci. / arXiv 2020</p>
+        <h2>Rahman et al.</h2>
+        <p>
+          <span class="chip">DenseNet201 wins</span>
+          <span class="chip">2 binaries + 3-class</span>
+          <span class="chip hard">own ~200/class test</span>
+        </p>
+        <p class="legend"><i style="background:var(--norm)"></i>N <i style="background:var(--bact)"></i>B <i style="background:var(--viral)"></i>V · bars = train after aug</p>
+        <div class="htree">
+          <div class="htree-root">5,247</div>
+          <div class="htree-stem"></div>
+          <div class="htree-arms">
+            <div class="htree-arm">
+              <div class="split-tag">Train 4,500/cls</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:1">4,500</div>
+                <div class="leaf b" style="flex:1">4,500</div>
+                <div class="leaf v" style="flex:1">4,500</div>
+              </div>
+            </div>
+            <div class="htree-arm">
+              <div class="split-tag test">Test ~200/cls</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:199">199</div>
+                <div class="leaf b" style="flex:197">197</div>
+                <div class="leaf v" style="flex:201">201</div>
+              </div>
+            </div>
+          </div>
         </div>
+        <div class="meta-row">
+          <div><b>Model / task</b><span>AlexNet, ResNet18, DenseNet201, SqueezeNet. MATLAB. All three tasks. 5-fold.</span></div>
+          <div><b>Preprocess</b><span>227² or 224². ImageNet norm. Rot 45°, 10% scale/shift. No crop.</span></div>
+          <div><b>Imbalance</b><span>Augment every class to 4,500.</span></div>
+        </div>
+        <table class="compact">
+          <thead><tr><th>DenseNet201</th><th>Acc</th><th>Recall</th><th>AUC</th><th>F1</th></tr></thead>
+          <tbody>
+            <tr><td>P vs N</td><td>98.0%</td><td>99%</td><td>0.98</td><td>0.981</td></tr>
+            <tr><td>B vs V</td><td>95.0%</td><td>96%</td><td>0.952</td><td>0.952</td></tr>
+            <tr><td class="hard">3-class</td><td>93.3%</td><td>93.2%</td><td>0.95</td><td>0.935</td></tr>
+          </tbody>
+        </table>
       </section>
 
-      <section data-background-color="#0c0b09">
-        <p class="kicker">14 · Scoreboard with a warning</p>
-        <h2>These numbers are not one league.</h2>
+      <!-- Paper 5 -->
+      <section>
+        <p class="kicker">05 / 10 · Br. J. Radiol. 2021</p>
+        <h2>Salehi et al.</h2>
+        <p>
+          <span class="chip">DenseNet121</span>
+          <span class="chip hard">binary only</span>
+          <span class="chip">honest / lower</span>
+        </p>
+        <p class="legend"><i style="background:var(--norm)"></i>N <i style="background:var(--p)"></i>P · same Kermany pool, ~3:1</p>
+        <div class="htree">
+          <div class="htree-root">Kermany</div>
+          <div class="htree-stem"></div>
+          <div class="htree-arms">
+            <div class="htree-arm">
+              <div class="split-tag">Train ~3:1</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:1">Normal</div>
+                <div class="leaf p" style="flex:3">Pneumonia</div>
+              </div>
+            </div>
+            <div class="htree-arm">
+              <div class="split-tag test">Held-out</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:1">leakage warned</div>
+                <div class="leaf p" style="flex:3">same-patient risk</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div><b>Model / task</b><span>VGG19, DenseNet121, Xception, ResNet50. Best DenseNet121. Pneumonia vs normal only.</span></div>
+          <div><b>Preprocess</b><span>1/255, rot 15°, small shift/shear/zoom, flips, denoise, contrast, mean subtract.</span></div>
+          <div><b>Imbalance</b><span>SMOTE (rare in this field).</span></div>
+        </div>
+        <table class="compact">
+          <thead><tr><th>Model</th><th>Acc</th><th>AUC</th><th>Sens</th></tr></thead>
+          <tbody>
+            <tr><td>DenseNet121</td><td>86.8%</td><td>0.86</td><td>&gt;91%</td></tr>
+            <tr><td>Xception</td><td>86.0%</td><td>0.81</td><td>&gt;91%</td></tr>
+            <tr><td>All four</td><td>≥83%</td><td>—</td><td>&gt;91%</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Paper 6 -->
+      <section>
+        <p class="kicker">06 / 10 · Arab. J. Sci. Eng. 2021</p>
+        <h2>Ayan, Karabulut &amp; Ünver</h2>
+        <p>
+          <span class="chip">ensemble of 3</span>
+          <span class="chip">binary + 3-class</span>
+          <span class="chip">~624 test</span>
+        </p>
+        <p class="legend"><i style="background:var(--norm)"></i>N after aug <i style="background:var(--bact)"></i>B <i style="background:var(--viral)"></i>V</p>
+        <div class="htree">
+          <div class="htree-root">Kermany</div>
+          <div class="htree-stem"></div>
+          <div class="htree-arms">
+            <div class="htree-arm">
+              <div class="split-tag">Train (aug N)</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:2534">N 2,534</div>
+                <div class="leaf b" style="flex:2538">B ~2,538</div>
+                <div class="leaf v" style="flex:1345">V 1,345</div>
+              </div>
+            </div>
+            <div class="htree-arm">
+              <div class="split-tag test">Test 624</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:234">234</div>
+                <div class="leaf b" style="flex:242">242</div>
+                <div class="leaf v" style="flex:148">148</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div><b>Model / task</b><span>VGG / ResNet / Inception / Xception / MobileNet / SqueezeNet / PNet. Best = 3 models, not 7. Binary + 3-class.</span></div>
+          <div><b>Preprocess</b><span>TL, GAP, batch-norm, L2. Rot / zoom / flip on normals.</span></div>
+          <div><b>Imbalance</b><span>Normals 1,349 → 2,534 (near bacterial count).</span></div>
+        </div>
+        <table class="compact">
+          <thead><tr><th>Task</th><th>Acc</th><th>Sens / Rec</th><th>Spec / F1</th></tr></thead>
+          <tbody>
+            <tr><td>Binary ensemble</td><td>95.83%</td><td>97.76%</td><td>Spec 92.73% · AUC 95.21%</td></tr>
+            <tr><td>3-class ensemble</td><td>90.71%</td><td>B 97.93%</td><td>—</td></tr>
+            <tr><td class="hard">Viral class</td><td>—</td><td>77.03%</td><td>F1 82.31%</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Paper 7 -->
+      <section>
+        <p class="kicker">07 / 10 · PLoS One 2021</p>
+        <h2>Kundu et al.</h2>
+        <p>
+          <span class="chip">3-CNN ensemble</span>
+          <span class="chip hard">binary only</span>
+          <span class="chip">Kermany + RSNA</span>
+        </p>
+        <p class="legend"><i style="background:var(--norm)"></i>N <i style="background:var(--p)"></i>P</p>
+        <div class="htree">
+          <div class="htree-root">2 sets</div>
+          <div class="htree-stem"></div>
+          <div class="htree-arms">
+            <div class="htree-arm">
+              <div class="split-tag">Kermany</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:1">N</div>
+                <div class="leaf p" style="flex:3">P ~3:1</div>
+              </div>
+            </div>
+            <div class="htree-arm">
+              <div class="split-tag test">RSNA out</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:1">N</div>
+                <div class="leaf p" style="flex:1">P · external</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div><b>Model / task</b><span>Weighted-prob ensemble: GoogLeNet + ResNet-18 + DenseNet-121. Pneumonia vs normal.</span></div>
+          <div><b>Preprocess</b><span>Resize 224×224×3. No SMOTE.</span></div>
+          <div><b>Imbalance</b><span>Transfer learning only. No reweight.</span></div>
+        </div>
+        <table class="compact">
+          <thead><tr><th>Set</th><th>Acc</th><th>Prec</th><th>Recall</th><th>F1 / AUC</th></tr></thead>
+          <tbody>
+            <tr><td>Kermany</td><td>98.81%</td><td>98.82%</td><td>98.80%</td><td>F1 98.79% · AUC 98.35%</td></tr>
+            <tr><td class="hard">RSNA</td><td>86.95%</td><td>—</td><td>87.02%</td><td>drops ~12 pts</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Paper 8 -->
+      <section>
+        <p class="kicker">08 / 10 · arXiv 2024</p>
+        <h2>XCCNet</h2>
+        <p>
+          <span class="chip">CNN + transformer</span>
+          <span class="chip hard">binary</span>
+          <span class="chip hard">80/10/10 not 624</span>
+        </p>
+        <p class="legend"><i style="background:var(--norm)"></i>N after GAN <i style="background:var(--p)"></i>P</p>
+        <div class="htree">
+          <div class="htree-root">Kermany</div>
+          <div class="htree-stem"></div>
+          <div class="htree-arms">
+            <div class="htree-arm">
+              <div class="split-tag">Train (ADA)</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:4207">N 4,207</div>
+                <div class="leaf p" style="flex:4273">P 4,273</div>
+              </div>
+            </div>
+            <div class="htree-arm">
+              <div class="split-tag test">80 / 10 / 10</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:1">not Cell 624</div>
+                <div class="leaf p" style="flex:1">+ 3 other sets</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div><b>Model / task</b><span>Dilated CNN (SFx) + contrastive transformer (CoTFx). Binary. Grad-CAM / Score-CAM / LIME.</span></div>
+          <div><b>Preprocess</b><span>CLAHE, lung seg (ResUNet++), rib suppression.</span></div>
+          <div><b>Imbalance</b><span>GAN/ADA: +2,624 synthetic normals (1,583 → 4,207).</span></div>
+        </div>
+        <table class="compact">
+          <thead><tr><th>Setting</th><th>Acc</th><th>P / R / F1</th></tr></thead>
+          <tbody>
+            <tr><td>No aug</td><td>96.29%</td><td>—</td></tr>
+            <tr><td>Traditional aug</td><td>97.18%</td><td>—</td></tr>
+            <tr><td>Full stack</td><td>99.76%</td><td>99.75%</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Paper 9 -->
+      <section>
+        <p class="kicker">09 / 10 · arXiv 2025</p>
+        <h2>LightPneumoNet · Chauhan et al.</h2>
+        <p>
+          <span class="chip">388k-param CNN</span>
+          <span class="chip hard">binary</span>
+          <span class="chip">independent test</span>
+        </p>
+        <p class="legend"><i style="background:var(--norm)"></i>N <i style="background:var(--p)"></i>P · weights 2.0 / 1.2</p>
+        <div class="htree">
+          <div class="htree-root">Kermany</div>
+          <div class="htree-stem"></div>
+          <div class="htree-arms">
+            <div class="htree-arm">
+              <div class="split-tag">Train ~3:1</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:1">N ×2.0</div>
+                <div class="leaf p" style="flex:3">P ×1.2</div>
+              </div>
+            </div>
+            <div class="htree-arm">
+              <div class="split-tag test">Held-out</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:1">official-style</div>
+                <div class="leaf p" style="flex:3">not 80/10/10</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div><b>Model / task</b><span>Scratch 4-block CNN, filters 16→128, 1.48 MB. Pneumonia vs normal.</span></div>
+          <div><b>Preprocess</b><span>224², RGB→gray, [0,1]. Rot 12°, zoom/shift/shear 0.15. No h-flip.</span></div>
+          <div><b>Imbalance</b><span>class_weight Normal 2.0, Pneumonia 1.2.</span></div>
+        </div>
+        <table class="compact">
+          <thead><tr><th>Task</th><th>Acc</th><th>Prec</th><th>Recall</th><th>F1</th></tr></thead>
+          <tbody>
+            <tr><td>P vs N</td><td>94.2%</td><td>0.92</td><td>0.99</td><td>0.96</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Paper 10 -->
+      <section>
+        <p class="kicker">10 / 10 · arXiv 2026</p>
+        <h2>TL vs custom CNNs</h2>
+        <p>
+          <span class="chip">ResNet50 fine-tune</span>
+          <span class="chip hard">binary</span>
+          <span class="chip hard">80/10/10 of 5,216</span>
+        </p>
+        <p class="legend"><i style="background:var(--norm)"></i>N <i style="background:var(--p)"></i>P · discard 16-image val</p>
+        <div class="htree">
+          <div class="htree-root">5,216</div>
+          <div class="htree-stem"></div>
+          <div class="htree-arms">
+            <div class="htree-arm">
+              <div class="split-tag">Train 4,172</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:1">N</div>
+                <div class="leaf p" style="flex:287">P 2.87:1</div>
+              </div>
+            </div>
+            <div class="htree-arm">
+              <div class="split-tag test">Val 521 · Test 523</div>
+              <div class="leaves">
+                <div class="leaf n" style="flex:1">not Cell 624</div>
+                <div class="leaf p" style="flex:3">3 errors / 523</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div><b>Model / task</b><span>Scratch 4-block vs ResNet50 / DenseNet121 / EfficientNet-B0. Frozen vs last-2-block FT. Binary.</span></div>
+          <div><b>Preprocess</b><span>224², gray→3ch, ImageNet mean/std. Flip, ±10° rot, affine, jitter.</span></div>
+          <div><b>Imbalance</b><span>None. Report the 2.87:1 ratio.</span></div>
+        </div>
+        <table class="compact">
+          <thead><tr><th>ResNet50 FT</th><th>Acc</th><th>F1</th><th>AUC</th><th>Sens / Spec</th></tr></thead>
+          <tbody>
+            <tr><td>Headline</td><td>99.43%</td><td>99.61%</td><td>99.93%</td><td>99.48% / 99.26%</td></tr>
+            <tr><td>Note</td><td colspan="4">FT beats frozen +5.48% avg. Ensemble added 0. Different exam than 624.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Close table -->
+      <section>
+        <p class="kicker">Do not rank on one board</p>
+        <h2>Same set. Different exams.</h2>
         <table class="compact">
           <thead>
-            <tr>
-              <th>Paper</th>
-              <th>Backbone</th>
-              <th>Imbalance</th>
-              <th>Headline</th>
-              <th>Split</th>
-            </tr>
+            <tr><th>#</th><th>Paper</th><th>Task</th><th>Imbalance</th><th>Headline</th><th>Split</th></tr>
           </thead>
           <tbody>
-            <tr><td>Kermany 2018</td><td>Inception V3 frozen</td><td>none</td><td>92.8% acc · 90.1% spec</td><td>Cell 624</td></tr>
-            <tr><td>Rajaraman 2018</td><td>VGG16 + lung crop</td><td>noisy train</td><td>96.2 / 93.6%</td><td>Official-style</td></tr>
-            <tr><td>Stephen 2019</td><td>Scratch CNN</td><td>heavy aug</td><td>93.7% val</td><td>Custom</td></tr>
-            <tr><td>Rahman 2020</td><td>DenseNet201</td><td>4,500 / class</td><td>98 / 93.3 / 95%</td><td>Augmented folds</td></tr>
-            <tr><td>Salehi 2021</td><td>DenseNet121</td><td>SMOTE</td><td>86.8%</td><td>Conservative</td></tr>
-            <tr><td>Ayan 2021</td><td>CNN ensemble</td><td>aug normals</td><td>95.8 / 90.7%</td><td>624 test</td></tr>
-            <tr><td>Kundu 2021</td><td>3-CNN ens.</td><td>TL</td><td>98.8% · 87% RSNA</td><td>Two datasets</td></tr>
-            <tr><td>XCCNet 2024</td><td>CNN + ViT</td><td>ADA GAN</td><td>99.76%</td><td>80/10/10</td></tr>
-            <tr><td>LightPneumo 2025</td><td>388k CNN</td><td>class weights</td><td>94.2% / 0.99 rec</td><td>Held-out test</td></tr>
-            <tr><td>Comparative 2026</td><td>ResNet50 FT</td><td>none</td><td>99.43%</td><td class="hard">Reshuffled</td></tr>
+            <tr><td>1</td><td>Kermany</td><td>2 bin</td><td>none</td><td>92.8 / 90.7</td><td>624</td></tr>
+            <tr><td>2</td><td>Rajaraman</td><td>2 bin + 3</td><td>noisy train</td><td>96.2 / 93.6 / 91.8</td><td>624</td></tr>
+            <tr><td>3</td><td>Stephen</td><td>1 bin</td><td>heavy aug</td><td>93.7 val</td><td>custom</td></tr>
+            <tr><td>4</td><td>Rahman</td><td>2 bin + 3</td><td>4,500/cls</td><td>98 / 95 / 93.3</td><td>~200/cls</td></tr>
+            <tr><td>5</td><td>Salehi</td><td>1 bin</td><td>SMOTE</td><td>86.8</td><td>conservative</td></tr>
+            <tr><td>6</td><td>Ayan</td><td>bin + 3</td><td>aug N</td><td>95.8 / 90.7 · viral 77</td><td>~624</td></tr>
+            <tr><td>7</td><td>Kundu</td><td>1 bin</td><td>TL</td><td>98.8 → 87 RSNA</td><td>2 sets</td></tr>
+            <tr><td>8</td><td>XCCNet</td><td>1 bin</td><td>GAN</td><td>99.76</td><td>80/10/10</td></tr>
+            <tr><td>9</td><td>LightPneumo</td><td>1 bin</td><td>weights</td><td>94.2 / rec 0.99</td><td>held-out</td></tr>
+            <tr><td>10</td><td>2026 TL</td><td>1 bin</td><td>none</td><td>99.43</td><td class="hard">reshuffle</td></tr>
           </tbody>
         </table>
-        <aside class="notes">Do not let anyone rank XCCNet above Kermany. Different tests. Say that out loud.</aside>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">15 · Consensus</p>
-        <h2>What the ten papers agree on.</h2>
-        <ul>
-          <li>Transfer an ImageNet CNN. Whether to freeze it is <em>not</em> settled — Kermany froze; 2026 unfreezes and gains ~5 points.</li>
-          <li>DenseNet and ResNet are enough. EfficientNet is not automatically better here.</li>
-          <li>Augment or reweight the normal (and viral) class. Accuracy alone lies.</li>
-          <li>Viral vs bacterial is the remaining clinical task. Already 2 points worse in the Cell paper.</li>
-          <li>Kermany does not travel — expect a double-digit drop on RSNA or another hospital.</li>
-        </ul>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">16 · Open fights</p>
-        <h2>Where they do not agree.</h2>
-        <div class="two-col" style="font-size:0.78em;">
-          <div>
-            <p class="callout">Is 99% pneumonia, or Guangzhou film-processor texture?</p>
-            <p class="callout barium">Freeze the backbone (Kermany) vs fine-tune last blocks (2026, +5.5%).</p>
-          </div>
-          <div>
-            <p class="callout">One well-tuned ResNet vs a three-model ensemble (Ayan, Kundu).</p>
-            <p class="callout danger">Cell 624 test vs Kaggle’s 16-image val vs a homemade 80/10/10. This is the real leaderboard bug.</p>
-          </div>
-        </div>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">17 · For our project</p>
-        <h2>A baseline that would survive a viva.</h2>
-        <ol>
-          <li>State the split. Cell 624 <em>or</em> patient-level 80/10/10. Never both quietly.</li>
-          <li>Train ResNet50 (or DenseNet121). Ablate frozen vs last-block fine-tune.</li>
-          <li>Report both Cell tasks: pneumonia-vs-normal <em>and</em> bacterial-vs-viral. Lead with viral recall.</li>
-          <li>Scratch CNN as the control (Stephen / LightPneumoNet).</li>
-          <li>Grad-CAM on errors, aimed at Figure S6 signs — focal consolidation vs interstitial pattern.</li>
-        </ol>
-        <aside class="notes">This is the slide to leave up in Q&amp;A. If they ask for novelty: freeze vs fine-tune on the official 624, lung-crop ablation, or viral-class loss.</aside>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">References</p>
-        <h2>The ten.</h2>
-        <ol style="font-size:0.42em; line-height:1.45;">
-          <li>Kermany et al. Identifying medical diagnoses… *Cell* 2018. 10.1016/j.cell.2018.02.010 — local PDF; data 10.17632/rscbjbr9sj.3</li>
-          <li>Rajaraman et al. Visualization and interpretation… *Appl. Sci.* 2018. 10.3390/app8101715</li>
-          <li>Stephen et al. An efficient deep learning approach… *J. Healthc. Eng.* 2019. 10.1155/2019/4180949</li>
-          <li>Rahman et al. Transfer learning with deep CNN… arXiv:2004.06578</li>
-          <li>Salehi et al. Automated detection… *Br. J. Radiol.* 2021. 10.1259/bjr.20201263</li>
-          <li>Ayan et al. Diagnosis of pediatric pneumonia with ensemble… *Arab. J. Sci. Eng.* 2021. 10.1007/s13369-021-06127-z</li>
-          <li>Kundu et al. Pneumonia detection… ensemble… *PLoS One* 2021. 10.1371/journal.pone.0256630</li>
-          <li>XCCNet. Explainable contrastive dilated CNN + transformer. arXiv:2410.16143</li>
-          <li>Chauhan et al. LightPneumoNet. arXiv:2510.11232</li>
-          <li>Pediatric pneumonia… TL vs custom CNNs. arXiv:2601.00837</li>
-        </ol>
-        <p class="footer-meta">Full notes and access log: literature-survey.md</p>
-      </section>
-
-      <section data-background-color="#0c0b09">
-        <p class="kicker">Close</p>
-        <h1>The field already<br>cleared 90%.</h1>
-        <div class="title-rule"></div>
-        <p>The remaining work is the viral class, the split, and whether the model still works on someone else’s film.</p>
-        <p class="footer-meta">Arrow keys · S for speaker notes · Esc for overview</p>
       </section>
 
     </div>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
   <script>
+    if (window.location.search.match(/print-pdf/gi)) {
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/css/print/pdf.css";
+      document.head.appendChild(link);
+    }
     Reveal.initialize({
       hash: true,
       slideNumber: "c/t",
       transition: "slide",
+      pdfSeparateFragments: false,
+      pdfMaxPagesPerSlide: 1,
       transitionSpeed: "fast",
       backgroundTransition: "fade",
       center: true,
-      width: 1180,
+      width: 1200,
       height: 700,
-      margin: 0.08,
+      margin: 0.06,
       plugins: [RevealNotes]
     });
   </script>
