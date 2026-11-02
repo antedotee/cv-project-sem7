@@ -4,20 +4,27 @@ __pycache__/
 .ipynb_checkpoints/
 .venv/
 venv/
-
 # LaTeX build products
 *.aux
 *.log
 *.out
 *.toc
 *.synctex.gz
-
 # Dataset and preprocessing cache. The submitted checkpoint is tracked.
 data/
 baseline/cache/
 baseline/checkpoints/*
 !baseline/checkpoints/xccnet_best.pt
 *.pth
-
 # Local Kaggle credentials
 kaggle.json
+# Local notes and study material, kept off the remote
+*.md
+milestones/
+quiz/
+.preview/
+# Per-run images; the ones used in the paper are in report/figures/
+experiments/*/failures.png
+experiments/*/gradcam.png
+experiments/*.png
+report/figures/gradcam_*.png
