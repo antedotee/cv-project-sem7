@@ -211,10 +211,24 @@ def combined_loss(
     temperature: float,
     l1_lambda: float,
     parameters: Iterable[torch.nn.Parameter],
+    loss_type: str = "bce",
+    gamma: float = 2.0,
 ) -> tuple[torch.Tensor, dict[str, float]]:
-    """Eq. 15: phi * contrastive + (1 - phi) * binary cross-entropy, plus an L1 term."""
+    """Eq. 15: phi * contrastive + (1 - phi) * classification, plus an L1 term.
+
+    ``loss_type="bce"`` is the paper's binary cross-entropy. ``loss_type="focal"``
+    is our hypothesis: focal loss (Lin et al., 2017) multiplies each film's
+    cross-entropy by (1 - p_t) ** gamma, so confident, easy films count less.
+    """
     contrastive = info_nce(spatial, global_features, temperature)
-    classification = F.binary_cross_entropy(probability, labels)
+    if loss_type == "bce":
+        classification = F.binary_cross_entropy(probability, labels)
+    elif loss_type == "focal":
+        per_film = F.binary_cross_entropy(probability, labels, reduction="none")
+        p_true = probability * labels + (1.0 - probability) * (1.0 - labels)
+        classification = ((1.0 - p_true) ** gamma * per_film).mean()
+    else:
+        raise ValueError(f"loss_type must be 'bce' or 'focal', got {loss_type!r}")
     l1_penalty = torch.zeros((), device=probability.device)
     if l1_lambda > 0:
         l1_penalty = torch.stack([parameter.abs().mean() for parameter in parameters]).mean()
@@ -250,12 +264,17 @@ def binary_metrics(probability: np.ndarray, labels: np.ndarray, threshold: float
     recall_den = true_positive + false_negative
     precision = true_positive / precision_den if precision_den else 0.0
     recall = true_positive / recall_den if recall_den else 0.0
+    specificity_den = true_negative + false_positive
+    specificity = true_negative / specificity_den if specificity_den else 0.0
     f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) else 0.0
     return {
         "accuracy": 100.0 * (true_positive + true_negative) / total,
         "precision": 100.0 * precision,
         "recall": 100.0 * recall,
+        "specificity": 100.0 * specificity,
+        "balanced_accuracy": 50.0 * (recall + specificity),
         "f1": 100.0 * f1,
+        "threshold": float(threshold),
         "tp": true_positive,
         "tn": true_negative,
         "fp": false_positive,
@@ -280,6 +299,21 @@ def predict_loader(model: XCCNet, loader: DataLoader, device: torch.device) -> t
 def evaluate(model: XCCNet, loader: DataLoader, device: torch.device) -> dict[str, float]:
     probability, labels = predict_loader(model, loader, device)
     return binary_metrics(probability, labels)
+
+
+def roc_auc(probability: np.ndarray, labels: np.ndarray) -> float:
+    from sklearn.metrics import roc_auc_score
+
+    return float(roc_auc_score(labels, probability))
+
+
+def pick_threshold(probability: np.ndarray, labels: np.ndarray) -> float:
+    """Threshold that maximises sensitivity + specificity (Youden's J). Use validation data only."""
+    from sklearn.metrics import roc_curve
+
+    false_positive_rate, true_positive_rate, thresholds = roc_curve(labels, probability)
+    best = int(np.argmax(true_positive_rate - false_positive_rate))
+    return float(min(thresholds[best], 1.0))
 
 
 def trainable_state(model: XCCNet) -> dict[str, torch.Tensor]:
@@ -315,6 +349,8 @@ def train_one_epoch(
     temperature: float,
     l1_lambda: float,
     grad_clip: float = 1.0,
+    loss_type: str = "bce",
+    gamma: float = 2.0,
 ) -> dict[str, float]:
     model.train()
     phi = phi_for_epoch(epoch)
@@ -338,6 +374,8 @@ def train_one_epoch(
             temperature=temperature,
             l1_lambda=l1_lambda,
             parameters=parameters,
+            loss_type=loss_type,
+            gamma=gamma,
         )
         scaler.scale(loss).backward()
         scaler.unscale_(optimizer)
@@ -372,6 +410,8 @@ def fit(
     patience: int,
     checkpoint_path: str | Path,
     clip_learning_rate: float | None = None,
+    loss_type: str = "bce",
+    gamma: float = 2.0,
 ) -> FitResult:
     checkpoint_path = Path(checkpoint_path)
     checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
@@ -405,6 +445,8 @@ def fit(
             epoch=epoch,
             temperature=temperature,
             l1_lambda=l1_lambda,
+            loss_type=loss_type,
+            gamma=gamma,
         )
         val_stats = evaluate(model, val_loader, device)
         scheduler.step(val_stats["accuracy"])
@@ -460,7 +502,8 @@ def collect_kermany_records(root: str | Path) -> list[tuple[str, int]]:
                 chosen[filename.lower()] = (path, label)
     if not chosen:
         raise FileNotFoundError(f"No NORMAL/PNEUMONIA images found under {root}")
-    return list(chosen.values())
+    # Sort so the seeded split is the same on every machine. os.walk order depends on the disk.
+    return sorted(chosen.values(), key=lambda record: (record[1], os.path.basename(record[0]).lower()))
 
 
 def _save_checkpoint(state: dict, path: str | Path) -> None:
@@ -778,6 +821,21 @@ def smoke_test() -> None:
     images = torch.rand(4, 3, IMAGE_SIZE, IMAGE_SIZE)
     labels = torch.tensor([0, 1, 1, 0], dtype=torch.float32)
     probability, _, spatial, global_features = model(images)
+    losses = {}
+    for loss_type in ("bce", "focal"):
+        losses[loss_type], _ = combined_loss(
+            probability,
+            labels,
+            spatial,
+            global_features,
+            phi=0.0,
+            temperature=0.07,
+            l1_lambda=0.0,
+            parameters=[],
+            loss_type=loss_type,
+        )
+    if not 0 < float(losses["focal"].detach()) < float(losses["bce"].detach()):
+        raise AssertionError(f"focal loss should be smaller than BCE: {losses}")
     loss, _ = combined_loss(
         probability,
         labels,
@@ -787,8 +845,12 @@ def smoke_test() -> None:
         temperature=0.07,
         l1_lambda=1e-6,
         parameters=[parameter for parameter in model.parameters() if parameter.requires_grad],
+        loss_type="focal",
     )
     loss.backward()
+    metrics = binary_metrics(np.array([0.9, 0.2, 0.8, 0.6]), np.array([1, 0, 1, 0]))
+    if metrics["specificity"] != 50.0 or metrics["recall"] != 100.0:
+        raise AssertionError(metrics)
     if probability.shape != (4,):
         raise AssertionError(probability.shape)
     if spatial.shape != (4, 256) or global_features.shape != (4, 256):

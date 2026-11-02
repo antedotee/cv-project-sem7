@@ -1074,6 +1074,74 @@
         </p>
       </section>
 
+      <!-- M4 results -->
+      <section>
+        <p class="kicker">Milestone 4 · 585 test films · mean ± std over 3 seeds</p>
+        <h2>Ablation results.</h2>
+        <table class="compact">
+          <thead><tr><th>Row</th><th>Change</th><th>Acc</th><th>Sens</th><th>Spec</th><th>AUC</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>Baseline</td><td>92.7 ± 0.6</td><td>95.3 ± 1.9</td><td>85.7 ± 3.3</td><td>0.978</td></tr>
+            <tr><td>A′</td><td>Threshold tuned on val</td><td>92.4 ± 0.7</td><td>93.3 ± 1.5</td><td>90.1 ± 2.2</td><td>0.978</td></tr>
+            <tr><td>B</td><td>Focal loss γ = 2</td><td>91.7 ± 0.4</td><td>96.3 ± 1.1</td><td class="hard">79.1 ± 2.5</td><td>0.975</td></tr>
+            <tr><td>C</td><td>Lung mask off</td><td><b>95.8 ± 0.3</b></td><td><b>98.0 ± 0.4</b></td><td><b>89.9 ± 1.9</b></td><td><b>0.993</b></td></tr>
+          </tbody>
+        </table>
+        <table class="compact" style="margin-top:0.5em;">
+          <thead><tr><th>Row</th><th>We predicted</th><th>We got</th></tr></thead>
+          <tbody>
+            <tr><td>A′</td><td>Spec +2–5, sens −1</td><td>Spec +4.4, sens −2.0 ✓</td></tr>
+            <tr><td>B</td><td>Spec 88–91%, AUC ±0.005</td><td class="hard">Spec 79.1% ✗ · AUC −0.003 ✓</td></tr>
+            <tr><td>C</td><td>Acc −0.5 to −2</td><td class="hard">Acc +3.1 ✗</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Why focal failed -->
+      <section>
+        <p class="kicker">Milestone 5 · our hypothesis was wrong</p>
+        <h2>Focal loss only rescaled the scores.</h2>
+        <ol class="paper-list">
+          <li><b>01</b> Cross-entropy: 78% of films score below 0.1 or above 0.9. Focal loss: 35%. The median normal film moves from 0.08 to 0.35, so more normal films cross 0.5.</li>
+          <li><b>02</b> AUC does not change (0.978 vs 0.975). The ranking of films is the same.</li>
+          <li><b>03</b> With the threshold tuned on validation, both reach 90.1% specificity. B does not beat A′.</li>
+          <li><b>04</b> The risk we wrote down came true. The sampler already balanced the classes, so focal loss had nothing left to fix.</li>
+        </ol>
+      </section>
+
+      <!-- Lung mask + failures -->
+      <section>
+        <p class="kicker">Milestone 5 · failure analysis</p>
+        <h2>The mask cuts off lung.</h2>
+        <img src="../report/figures/failures_A.png" style="width:100%;margin:0;">
+        <ol class="paper-list" style="font-size:0.8em;">
+          <li><b>01</b> The mask model was trained on adult films. On child films it cuts off lobes. Normal films with the smallest masks: 23.4% error, against 14.4% for the rest.</li>
+          <li><b>02</b> Grad-CAM marks the mask edge and diaphragm, not lung texture.</li>
+          <li><b>03</b> Recall by subtype (row A): normal 85.7%, bacterial 96.5%, viral 93.4%. Viral is the weak pneumonia class, as in Ayan et al.</li>
+          <li><b>04</b> No mask scores higher, but the model may also use the "R" marker and film borders. One hospital cannot tell these apart.</li>
+        </ol>
+      </section>
+
+      <!-- Gap + limits -->
+      <section>
+        <p class="kicker">Reproduction gap · limitations</p>
+        <h2>What the numbers can and cannot say.</h2>
+        <table class="compact">
+          <thead><tr><th>Source</th><th>Accuracy</th></tr></thead>
+          <tbody>
+            <tr><td>Paper, no GAN</td><td>97.18%</td></tr>
+            <tr><td>Paper's own precision + recall at our 427:158 mix</td><td>94.84%</td></tr>
+            <tr><td>Our first run</td><td>94.87%</td></tr>
+            <tr><td>Re-run, fixed split, 3 seeds</td><td>92.71 ± 0.55%</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72em;margin:0.45em 0 0;">
+          Between seeds, specificity moves by up to 6 points, so one seed is not enough.
+          Limits: one hospital, pooled 80/10/10 split instead of the official 624-patient test, a stand-in lung mask, 3 seeds.
+          <b>No clinical claim.</b>
+        </p>
+      </section>
+
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
