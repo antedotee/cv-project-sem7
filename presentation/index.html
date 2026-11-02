@@ -1042,13 +1042,35 @@
         </table>
         <p style="font-size:0.72em;margin:0.45em 0 0;">
           The model misses 7 pneumonia films and marks 23 normal films as pneumonia.
-          The 99.76% test adds 2,624 synthetic normal films, so the two classes are almost equal.
+          Specificity is 85.4%. Sensitivity is 98.4%.
         </p>
         <p style="font-size:0.72em;margin:0.35em 0 0;">
-          <b>Hypothesis.</b> The gap comes from the GAN and from rib suppression.
-          <b>Prediction.</b> Add one of those two stages on this same split.
-          Accuracy on the 585-film test rises above 94.87%.
-          The same model on the official 624-patient test scores below 94.87%.
+          <b>v1, dropped.</b> "The gap comes from the GAN and rib suppression." We cannot build either from the paper.
+          The paper's own precision and recall give 94.84% accuracy on our class mix. We got 94.87%.
+        </p>
+        <p style="font-size:0.72em;margin:0.35em 0 0;">
+          <b>v2 hypothesis.</b> Replace cross-entropy with focal loss (γ = 2). Focal loss gives less weight to easy films,
+          so training focuses on the hard normal films.
+          <b>Prediction.</b> Specificity 85.4% → 88–91%. Sensitivity within 1 point. Accuracy +0.5 to 1.5. AUC unchanged (±0.005).
+        </p>
+      </section>
+
+      <!-- Predictions before code -->
+      <section>
+        <p class="kicker">Milestone 3 · predictions written before each run</p>
+        <h2>One change per row.</h2>
+        <table class="compact">
+          <thead><tr><th>Row</th><th>Change</th><th>Predicted effect</th><th>Why</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>Baseline + AUC, specificity</td><td>AUC 0.97–0.99</td><td>30 errors in 585</td></tr>
+            <tr><td>A′</td><td>Threshold tuned on val</td><td>Spec +2–5, sens −1, same AUC</td><td>Moves FP into FN</td></tr>
+            <tr><td>B</td><td>Focal loss γ = 2</td><td>Spec 88–91%, AUC ±0.005</td><td>Hard normal films get the gradient</td></tr>
+            <tr><td>C</td><td>Lung mask off</td><td>Acc −0.5 to −2, CAM leaves lungs</td><td>Model can use markers and edges</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72em;margin:0.45em 0 0;">
+          If B beats A′, focal loss changed what the model learned. If B only matches A′, it just moved the threshold.
+          γ is chosen on validation only. The test set is used once per run.
         </p>
       </section>
 
