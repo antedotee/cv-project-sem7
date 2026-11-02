@@ -20,6 +20,7 @@ baseline/checkpoints/*
 kaggle.json
 # Local notes and study material, kept off the remote
 *.md
+!README.md
 milestones/
 quiz/
 .preview/
