@@ -53,6 +53,13 @@ Test set: 585 films (427 pneumonia, 158 normal). Mean ± standard deviation over
 - **Most errors are normal films called pneumonia.** Among pneumonia films, viral cases are missed more often than bacterial ones (93.4% vs 96.5% recall in row A), which matches earlier papers.
 - **Reproduction gap.** The paper reports 97.18% for its setting without the GAN. Its own precision and recall give 94.84% on a test set with our class mix, and our first run reached 94.87%. Our later runs use a fixed file order for the split and an average over three seeds, which gives 92.71%.
 
+## Run records
+
+The experiments ran on a free Colab T4 GPU through the Colab command-line tool, not inside a notebook. Their record is in `experiments/`:
+
+- **`experiments/results.ipynb`** opens all 9 saved runs. It shows each run's settings and its epoch-by-epoch training log, then recomputes the results table, confusion matrices, ROC curves, and failure analysis from the per-film scores. It also checks that the recomputed numbers match the ones each run saved. It needs no GPU and runs in a few seconds.
+- **`experiments/colab_logs/session1.ipynb`** and **`session2.ipynb`** are the Colab tool's own history of the two GPU sessions on 2 November 2026: every piece of code sent to the GPU, what it printed (including the Tesla T4 device line, training epochs, and each run's final `DONE` line), and every result file downloaded, all with timestamps. The first session was dropped by Colab partway through, so the second one restarts the remaining runs.
+
 ## Repository structure
 
 ```
@@ -68,6 +75,8 @@ experiments/
   B_focal_g2*/           Row B, seeds 42, 1, 2
   C_no_mask*/            Row C, seeds 42, 1, 2
                          Each run folder has metrics.json, test_predictions.csv, val_predictions.csv
+  results.ipynb          Training logs of all runs and every number in the paper, recomputed
+  colab_logs/            Timestamped history of the two Colab GPU sessions
   summarize.py           Builds the results table, ROC curves, and confusion matrices from the runs
   mask_coverage.csv      Share of each test image kept by the lung mask
   test_files.csv         Test films with their original names and pneumonia subtype
