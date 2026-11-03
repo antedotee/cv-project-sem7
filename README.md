@@ -2,7 +2,7 @@
 
 Semester 7 Computer Vision project by Kartik Yadav, Gangadhar Yadav, and Sahil Sarawgi.
 
-We picked a published method for classifying children's chest X-rays as **normal** or **pneumonia**, rebuilt it, reproduced its result, and then tested one change of our own. We wrote the hypothesis and prediction before writing the code for it. The final write-up is an IEEE-format paper: [`report/xccnet_paper.pdf`](report/xccnet_paper.pdf).
+We picked a published method for classifying children's chest X-rays as **normal** or **pneumonia**, rebuilt it, reproduced its result, and then tested one change of our own. We wrote the hypothesis and prediction before writing the code for it. The final write-up is an IEEE-format paper: [`report/research_report.pdf`](report/research_report.pdf).
 
 ## The project in short
 
@@ -21,7 +21,7 @@ We picked a published method for classifying children's chest X-rays as **normal
 | 3. Reproduction | Trained on the paper's stratified 80/10/10 split on a free Colab GPU. First run: 94.87% test accuracy. | `baseline/xccnet_colab.ipynb`, `baseline/results/metrics.json` |
 | 4. Hypothesis | Predicted that focal loss would raise specificity from 85% to 88–91% with AUC unchanged. Committed on the slides before the code change. | `presentation/` (Hypothesis and Predictions slides) |
 | 5. Experiments | Four configurations, three random seeds each, same split for every run. | `baseline/run_experiment.py`, `experiments/` |
-| 6. Analysis and paper | Confusion matrices, ROC curves, misclassified films with Grad-CAM, reproduction gap, limitations. | `report/xccnet_paper.pdf`, `presentation/presentation.pdf` |
+| 6. Analysis and paper | Confusion matrices, ROC curves, misclassified films with Grad-CAM, reproduction gap, limitations. | `report/research_report.pdf`, `presentation/presentation.pdf` |
 
 ### The model
 
@@ -84,7 +84,7 @@ presentation/
   index.html             Slide deck (Reveal.js; open in a browser)
   presentation.pdf       PDF export of the slides
 report/
-  xccnet_paper.tex/.pdf  Final IEEE-format paper
+  research_report.tex/.pdf  Final IEEE-format paper
   ieee_literature_survey.tex   Literature survey in IEEE format
   literature_review.tex  Longer literature review
   figures/               Figures used in the paper
@@ -114,7 +114,7 @@ python experiments/summarize.py
 **Compile the paper.**
 
 ```
-cd report && pdflatex xccnet_paper.tex && pdflatex xccnet_paper.tex
+cd report && pdflatex research_report.tex && pdflatex research_report.tex
 ```
 
 ## Limitations
